@@ -72,6 +72,10 @@ function Tables () {
                   <img style={{width: '30px', height: '30px', borderRadius: '10px'}}
                        src={window.location.origin + '/images/trash-icon.png'}/>
                 </IconButton></td>
+                <td><IconButton>
+                  <img style={{width: '30px', height: '30px', borderRadius: '10px'}}
+                       src={window.location.origin + '/images/update.png'}/>
+                </IconButton></td>
                 <td/>
               </tr>
               </tbody>
