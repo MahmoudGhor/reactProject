@@ -57,7 +57,7 @@ export default [
     component: BlogPosts
   },
   {
-    path: "/client",
+    path: "/clients",
     layout: DefaultLayout,
     component: Client
   },
