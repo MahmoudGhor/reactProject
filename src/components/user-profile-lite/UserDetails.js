@@ -15,7 +15,7 @@ const UserDetails = ({ userDetails }) => (
       <div className="mb-3 mx-auto">
         <img
           className="rounded-circle"
-          src={userDetails.avatar}
+          src="https://ui-avatars.com/api/name=Ons+Jawadi?size=128"
           alt={userDetails.name}
           width="110"
         />
@@ -61,7 +61,7 @@ UserDetails.propTypes = {
 
 UserDetails.defaultProps = {
   userDetails: {
-    name: "Sierra Brooks",
+    name: "Test Test",
     avatar: require("./../../images/avatars/0.jpg"),
     jobTitle: "Project Manager",
     performanceReportTitle: "Workload",
