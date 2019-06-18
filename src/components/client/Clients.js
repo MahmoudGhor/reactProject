@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import {CreateClientButton} from '../buttons/index';
+import Tables from '../../views/Tables';
 
 
 const styles = theme => ({
@@ -32,7 +33,7 @@ class Clients extends Component {
         </Grid>
 
 
-
+        <Tables/>
       </div>
     );
 
