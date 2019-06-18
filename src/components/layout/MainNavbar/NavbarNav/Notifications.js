@@ -1,5 +1,7 @@
 import React from "react";
 import { NavItem, NavLink, Badge, Collapse, DropdownItem } from "shards-react";
+import CreateClientButton from '../../../buttons/ButtonCreerClient';
+import CreateOffreDePrixButton from '../../../buttons/ButtonCreerOffreDePrix';
 
 export default class Notifications extends React.Component {
   constructor(props) {
@@ -21,9 +23,8 @@ export default class Notifications extends React.Component {
   render() {
     return (
       <div style={{flexDirection: 'row', display: 'flex', justifyContent: 'space-evenly', alignItems: 'center'}}>
-        <CreateOffreDePrixButton/>
         <CreateClientButton/>
-        <CreateProfilButton/>
+        <CreateOffreDePrixButton/>
       </div>
     );
   }
