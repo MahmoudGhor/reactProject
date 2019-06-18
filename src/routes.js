@@ -12,21 +12,22 @@ import Errors from "./views/Errors";
 import ComponentsOverview from "./views/ComponentsOverview";
 import Tables from "./views/Tables";
 import BlogPosts from "./views/BlogPosts";
+import Client from "./components/client/Clients";
 
 export default [
   {
     path: "/",
     exact: true,
     layout: DefaultLayout,
-    component: () => <Redirect to="/Clients" />
+    component: () => <Redirect to="/blog-overview" />
   },
   {
-    path: "/Clients",
+    path: "/blog-overview",
     layout: DefaultLayout,
     component: BlogOverview
   },
   {
-    path: "/Utilisateur",
+    path: "/user-profile-lite",
     layout: DefaultLayout,
     component: UserProfileLite
   },
@@ -54,5 +55,10 @@ export default [
     path: "/blog-posts",
     layout: DefaultLayout,
     component: BlogPosts
-  }
+  },
+  {
+    path: "/client",
+    layout: DefaultLayout,
+    component: Client
+  },
 ];
