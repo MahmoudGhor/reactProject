@@ -17,7 +17,7 @@ const styles = theme => ({
 });
 
 class ContainedButtons extends Component {
-  
+
   state = {
     open: false,
   };
@@ -38,10 +38,10 @@ class ContainedButtons extends Component {
 
   render() {
     const {classes} = this.props;
-    
+
       return (
         <div>
-          <Button variant="contained" className={classes.button} onClick={this.handleClickOpen}>
+          <Button variant="contained" style={{width:'160px' , height:'40px' ,paddingRight: '0px' , paddingLeft: '0px' , marginRight: '20px'}} className='classes.button' onClick={this.handleClickOpen}>
             nouveau client
           </Button>
           <Checkout

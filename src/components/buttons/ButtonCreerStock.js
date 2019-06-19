@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import Checkout from '../CommandeFrom/checkout';
-import PubSub from 'pubsub-js';
-
+import CreerStock from '../stock/CreerStock';
 const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
@@ -17,17 +15,12 @@ const styles = theme => ({
 });
 
 class ContainedButtons extends Component {
-  //nhezouha HIYA W CHECKOUT lil app.js
+
   state = {
     open: false,
   };
-  constructor(props) {
-    super(props);
-   PubSub.subscribe('openCrerCommande', this.handleClickOpen);
-  }
-//nhezouha lil app.js w chnbadlouha setState b pubsub.pUBLISH
+
   handleClickOpen = () => {
-    console.log('hereee');
     this.setState({
       open: true,
     });
@@ -42,13 +35,10 @@ class ContainedButtons extends Component {
 
       return (
         <div>
-          <Button variant="contained"  style={{width:'160px' , height:'40px'}} className={classes.button} onClick={this.handleClickOpen}>
-            nouveau offre
+          <Button variant="contained" className={classes.button} onClick={this.handleClickOpen}>
+            nouveau produit
           </Button>
-          {/**
-          nhezouha lil app.js
-          **/}
-          <Checkout
+          <CreerStock
               selectedValue={this.state.selectedValue}
               open={this.state.open}
               onClose={this.handleClose}

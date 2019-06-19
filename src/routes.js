@@ -13,6 +13,12 @@ import ComponentsOverview from "./views/ComponentsOverview";
 import Tables from "./views/Tables";
 import BlogPosts from "./views/BlogPosts";
 import Client from "./components/client/Clients";
+import Utilisateur from "./components/utilisateur/Utilisateurs";
+import Devis from "./components/devis/Devis";
+import Stock from "./components/stock/Stocks";
+import Machine from "./components/machine/Machines";
+import OffrePrix from "./components/offreDePrix/OffreDePrixs";
+import Pieces from "./components/pieces/Pieces";
 
 export default [
   {
@@ -60,5 +66,29 @@ export default [
     path: "/clients",
     layout: DefaultLayout,
     component: Client
+  },{
+    path: "/Utilisateurs",
+    layout: DefaultLayout,
+    component: Utilisateur
+  },{
+    path: "/Devis",
+    layout: DefaultLayout,
+    component: Devis
+  },{
+    path: "/Stocks",
+    layout: DefaultLayout,
+    component: Stock
+  },{
+    path: "/Machines",
+    layout: DefaultLayout,
+    component: Machine
+  },{
+    path: "/OffresDePrix",
+    layout: DefaultLayout,
+    component: OffrePrix
+  },{
+    path: "/Pieces",
+    layout: DefaultLayout,
+    component: Pieces
   },
 ];

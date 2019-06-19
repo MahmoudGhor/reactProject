@@ -6,6 +6,7 @@ import { Container, Navbar } from "shards-react";
 import NavbarSearch from "./NavbarSearch";
 import NavbarNav from "./NavbarNav/NavbarNav";
 import NavbarToggle from "./NavbarToggle";
+import AppBar from '@material-ui/core/AppBar';
 
 const MainNavbar = ({ layout, stickyTop }) => {
   const classes = classNames(
@@ -15,7 +16,7 @@ const MainNavbar = ({ layout, stickyTop }) => {
   );
 
   return (
-    <div className={classes}>
+    <div className={classes} >
       <Container className="p-0">
         <Navbar type="light" className="align-items-stretch flex-md-nowrap p-0">
           <NavbarSearch />

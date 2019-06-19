@@ -1,18 +1,32 @@
 import React from "react";
 import { NavItem, NavLink, Badge, Collapse, DropdownItem } from "shards-react";
+import { withStyles } from '@material-ui/core/styles';
 import CreateClientButton from '../../../buttons/ButtonCreerClient';
 import CreateOffreDePrixButton from '../../../buttons/ButtonCreerOffreDePrix';
 
-export default class Notifications extends React.Component {
+
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit,
+    marginLeft: -12,
+    marginRight: 20,
+  },
+  input: {
+    display: 'none',
+  },
+});
+
+class Notifications extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       visible: false
     };
-
     this.toggleNotifications = this.toggleNotifications.bind(this);
   }
+
+
 
   toggleNotifications() {
     this.setState({
@@ -29,3 +43,4 @@ export default class Notifications extends React.Component {
     );
   }
 }
+export default withStyles(styles)(Notifications);
