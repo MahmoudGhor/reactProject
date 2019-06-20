@@ -12,7 +12,7 @@ const SidebarNavItem = ({ item }) => (
           dangerouslySetInnerHTML={{ __html: item.htmlBefore }}
         />
       )}
-      {item.title && <span>{item.title}</span>}
+      {item.title && <span style={{color:'#3f51b5' , fontWeight:'bold'}}>{item.title}</span>}
       {item.htmlAfter && (
         <div
           className="d-inline-block item-icon-wrapper"

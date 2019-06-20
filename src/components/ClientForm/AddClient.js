@@ -52,14 +52,18 @@ function AddClient(props) {
     <main className={classes.main}>
       <CssBaseline />
       <Paper className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
+        <div >
+          <img
+            style={{ maxWidth: "80px" }}
+            src={window.location.origin + '/images/client2.png'}
+            alt="Shards Dashboard"
+          />
+        </div>
         <Typography component="h1" variant="h5">
         Ajouter un Client
         </Typography>
         <form className={classes.form}>
-         
+
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="lastname">nom </InputLabel>
             <Input id="lastname" name="lastname" autoComplete="lastname" autoFocus />
@@ -80,11 +84,11 @@ function AddClient(props) {
             <InputLabel htmlFor="fax">numéro de fax </InputLabel>
             <Input id="fax" name="fax" autoComplete="fax" autoFocus />
           </FormControl>
-          
-          
-          
-          
-          
+
+
+
+
+
           <Button
           type="submit"
           fullWidth
@@ -93,8 +97,8 @@ function AddClient(props) {
           className={classes.submit}
         >
           valider
-     
-            
+
+
           </Button>
         </form>
       </Paper>

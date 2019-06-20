@@ -33,7 +33,7 @@ export default class UserActions extends React.Component {
         <DropdownToggle caret tag={NavLink} className="text-nowrap px-3">
           <img
             className="user-avatar rounded-circle mr-2"
-            src="https://ui-avatars.com/api/name=Ons+Jawadi?size=128"
+            src="https://ui-avatars.com/api/name=OJ?size=128"
             alt="User Avatar"
           />{" "}
           <span className="d-none d-md-inline-block">Ons Jawadi</span>

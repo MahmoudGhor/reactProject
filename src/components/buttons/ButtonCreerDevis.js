@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
   },
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 120,
+    minWidth: 225,
   },
 }));
 
@@ -40,8 +40,8 @@ export default function ControlledOpenSelect() {
         ajouter un devis
       </Button>
       <FormControl className={classes.formControl}>
-        <InputLabel htmlFor="demo-controlled-open-select">choisir l'offre correspondant </InputLabel>
-        <Select
+        <InputLabel style={{fontWeight: 'bold'}} htmlFor="demo-controlled-open-select">choisir l'offre correspondant </InputLabel>
+        <Select style={{fontWeight: 'bold'}}
           open={open}
           onClose={handleClose}
           onOpen={handleOpen}

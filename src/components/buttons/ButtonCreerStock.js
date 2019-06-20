@@ -7,7 +7,9 @@ const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
     marginLeft: -12,
-    marginRight: 20,
+    marginRight: 1000,
+    backgroundColor:'#3f51b5' ,
+    color:'#ffffff'
   },
   input: {
     display: 'none',

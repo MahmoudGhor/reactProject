@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
-import { Container, Row, Col, Card, CardHeader, CardBody } from "shards-react";
+import {Container, Row, Col, Card, CardHeader, CardBody} from "shards-react";
 import swal from 'sweetalert';
 
 
-import PageTitle from "../components/common/PageTitle";
+import PageTitle from "../common/PageTitle";
 import IconButton from '@material-ui/core/IconButton';
 import toRenderProps from 'recompose/toRenderProps';
 import withState from 'recompose/withState';
+
 const WithState = toRenderProps(withState('anchorEl', 'updateAnchorEl', null));
 
 class Tables extends Component {
@@ -37,7 +38,7 @@ class Tables extends Component {
 
 
         <WithState>
-          {({ anchorEl, updateAnchorEl }) => {
+          {({anchorEl, updateAnchorEl}) => {
             const open = Boolean(anchorEl);
             const handleClose = () => {
               updateAnchorEl(null);
@@ -63,13 +64,16 @@ class Tables extends Component {
                             <thead className="bg-light">
                             <tr>
                               <th scope="col" className="border-0">
-                                Nom
+                                Nom du client
                               </th>
                               <th scope="col" className="border-0">
-                                Prenom
+                                Numero de l'offre
                               </th>
                               <th scope="col" className="border-0">
-                                Email
+                                Date saisie
+                              </th>
+                              <th scope="col" className="border-0">
+                                Date sortis
                               </th>
                               <th scope="col" className="border-0">
                                 Supprimer
@@ -84,6 +88,7 @@ class Tables extends Component {
                               <td>Russian Federation</td>
                               <td>Gdańsk</td>
                               <td>107-0339</td>
+                              <td>107-0339</td>
                               <td><IconButton onClick={this.clicked.bind(this)}>
                                 <img style={{width: '30px', height: '30px', borderRadius: '10px'}}
                                      src={window.location.origin + '/images/poubelle.png'}/>
@@ -92,7 +97,7 @@ class Tables extends Component {
                                 <img style={{width: '30px', height: '30px', borderRadius: '10px'}}
                                      src={window.location.origin + '/images/update.png'}/>
                               </IconButton></td>
-                              <td/>
+
                             </tr>
                             </tbody>
                           </table>

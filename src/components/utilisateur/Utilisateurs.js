@@ -5,6 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import {CreerUtilisateur} from '../buttons/index';
 import ListeUtilisateurs from './listeUtilisateurs';
+import Tables from '../../views/Tables';
 
 
 
@@ -37,7 +38,7 @@ class Utilisateur extends Component {
 
                 </div>
 <div>
-<ListeUtilisateurs/>
+<Tables/>
 </div>
 
 

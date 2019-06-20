@@ -19,6 +19,8 @@ import Stock from "./components/stock/Stocks";
 import Machine from "./components/machine/Machines";
 import OffrePrix from "./components/offreDePrix/OffreDePrixs";
 import Pieces from "./components/pieces/Pieces";
+import SignIn from "./components/signIn/SignIn";
+import SignUp from "./components/SignUp/CreerUtilistaseur";
 
 export default [
   {
@@ -90,5 +92,11 @@ export default [
     path: "/Pieces",
     layout: DefaultLayout,
     component: Pieces
+  },{
+    path: "/SignIn",
+    layout: SignIn
+  },{
+    path: "/SignUp",
+    layout: SignUp
   },
 ];

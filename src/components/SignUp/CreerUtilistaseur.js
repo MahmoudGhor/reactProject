@@ -13,8 +13,6 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 
-import Dialog from '@material-ui/core/Dialog';
-
 const styles = theme => ({
   main: {
     width: 'auto',
@@ -46,63 +44,45 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 3,
   },
 });
-class CreerUtilisateur extends React.Component {
-  state = {
-    activeStep: 0,
-  };
 
-  handleClose = () => {
-    this.props.onClose(this.props.selectedValue);
-  };
-
-
-  render() {
-
-    const { activeStep } = this.state;
-    const { classes, onClose, selectedValue, ...other } = this.props;
-
+function SignIn(props) {
+  const { classes } = props;
 
   return (
-    <Dialog onClose={this.handleClose} aria-labelledby="simple-dialog-title" {...other}>
-
     <main className={classes.main}>
       <CssBaseline />
       <Paper className={classes.paper}>
-        <div >
+        <div className={classes.avatar}>
           <img
-            style={{ maxWidth: "60px" }}
-            src={window.location.origin + '/images/1004733.png'}
+            style={{ maxWidth: "80px" }}
+            src={window.location.origin + '/images/logo.png'}
             alt="Shards Dashboard"
           />
         </div>
         <Typography component="h1" variant="h5">
-        Ajouter un utilisateur
+          Bienvenue à SOPROCOM
         </Typography>
         <form className={classes.form}>
-        <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="name">Prenom</InputLabel>
-            <Input id="name" name="name" autoComplete="Nom" autoFocus />
-          </FormControl>
           <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="last Name">Nom</InputLabel>
-            <Input id="Last Name" name="Last Name" autoComplete="Last Name" autoFocus />
-          </FormControl>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="email">Addresse Email</InputLabel>
+            <InputLabel htmlFor="email">Email Address</InputLabel>
             <Input id="email" name="email" autoComplete="email" autoFocus />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="password">mot de passe</InputLabel>
+            <InputLabel htmlFor="nom">Nom</InputLabel>
+            <Input id="nom" name="nom" autoComplete="nom" autoFocus />
+          </FormControl>
+          <FormControl margin="normal" required fullWidth>
+            <InputLabel htmlFor="prenom">Prenom</InputLabel>
+            <Input id="prenom" name="prenom" autoComplete="prenom" autoFocus />
+          </FormControl>
+          <FormControl margin="normal" required fullWidth>
+            <InputLabel htmlFor="password">Password</InputLabel>
             <Input name="password" type="password" id="password" autoComplete="current-password" />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="password"> confirmer le mot de passe</InputLabel>
+            <InputLabel htmlFor="password">Confirmation Password</InputLabel>
             <Input name="password" type="password" id="password" autoComplete="current-password" />
           </FormControl>
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
           <Button
             type="submit"
             fullWidth
@@ -110,19 +90,16 @@ class CreerUtilisateur extends React.Component {
             color="primary"
             className={classes.submit}
           >
-            Ajouter utilisateur
+            Sign Up
           </Button>
         </form>
       </Paper>
     </main>
-    </Dialog>
   );
 }
-}
-CreerUtilisateur.propTypes = {
+
+SignIn.propTypes = {
   classes: PropTypes.object.isRequired,
-  onClose: PropTypes.func,
-  selectedValue: PropTypes.string,
 };
 
-export default withStyles(styles)(CreerUtilisateur);
+export default withStyles(styles)(SignIn);

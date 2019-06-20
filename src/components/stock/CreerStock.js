@@ -72,11 +72,15 @@ class CreerStock extends React.Component {
     <main className={classes.main}>
       <CssBaseline />
       <Paper className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
+        <div >
+          <img
+            style={{ maxWidth: "60px" }}
+            src={window.location.origin + '/images/panier.jpg'}
+            alt="Shards Dashboard"
+          />
+        </div>
         <Typography component="h1" variant="h5">
-         nouveu produit
+         Nouveau Produit
         </Typography>
         <form className={classes.form}>
 

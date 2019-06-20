@@ -41,7 +41,7 @@ class ContainedButtons extends Component {
 
       return (
         <div>
-          <Button variant="contained" style={{width:'160px' , height:'40px' ,paddingRight: '0px' , paddingLeft: '0px' , marginRight: '20px'}} className='classes.button' onClick={this.handleClickOpen}>
+          <Button variant="contained" style={{ width:'160px' , height:'40px' ,paddingRight: '0px' , paddingLeft: '0px' , marginRight: '20px' , backgroundColor:'#3f51b5' , color:'#ffffff'}} className='classes.button' onClick={this.handleClickOpen}>
             nouveau client
           </Button>
           <Checkout

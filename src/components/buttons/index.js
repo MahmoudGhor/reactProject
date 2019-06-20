@@ -6,9 +6,10 @@ import CreerDevis from './ButtonCreerDevis';
 import CreateMachineButton from './ButtonCreerMachine';
 import CreateOffreDePrixButton from './ButtonCreerOffreDePrix';
 import CreatePieceButton from './ButtonCreerPiece';
+import CreerClientForClientNavBar from './ButtonCreerClientForClientNavBar';
 
 export {
-    CreateClientButton,CreerOffreDePrix,CreerUtilisateur,CreerDevis,CreateStockButton,CreateMachineButton,CreateOffreDePrixButton,CreatePieceButton
+    CreateClientButton,CreerOffreDePrix,CreerUtilisateur,CreerDevis,CreateStockButton,CreateMachineButton,CreateOffreDePrixButton,CreatePieceButton,CreerClientForClientNavBar
 
 
 }

@@ -5,7 +5,8 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { CreerDevis } from '../buttons/index';
 import  ListDevis  from './DevisList';
-import FactureDevis from './FactureDevis'
+import FactureDevis from './FactureDevis';
+import Tables from './TablesDevis';
 
 
 const styles = theme => ({
@@ -32,7 +33,7 @@ class Devis extends Component {
                 </Grid>
 
                 <div>
-                    <ListDevis />
+                    <Tables />
                    <div><FactureDevis/></div>
 
                 </div>
