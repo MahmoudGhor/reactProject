@@ -5,6 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import {CreateStockButton} from '../buttons/index';
 import ListStock from './StockList';
+import MUIDataTable from "mui-datatables";
 
 
 const styles = theme => ({
@@ -18,6 +19,17 @@ const styles = theme => ({
     },
 });
 
+const columns = ["Nom", "Quantité", "Prix par kg", "Quantite"];
+
+const data = [
+  ["fer", "100 kg", "10 D", "Oui"],
+  ["fer", "100 kg", "10 D", "Oui"],
+  ["fer", "100 kg", "10 D", "Oui"],
+  ["fer", "100 kg", "10 D", "Oui"],
+];
+const options = {
+  filterType: 'checkbox',
+};
 
 class Stocks extends Component {
     render() {
@@ -32,7 +44,12 @@ class Stocks extends Component {
 
                 </Grid>
                 <div>
-                    <ListStock/>
+                  <MUIDataTable
+                    title={"Employee List"}
+                    data={data}
+                    columns={columns}
+                    options={options}
+                  />
                 </div>
 
             </div>

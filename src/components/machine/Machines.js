@@ -5,6 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import {CreateMachineButton} from '../buttons/index';
 import ListMachine from './MachineList';
+import Tables from './TablesMachine';
 
 
 
@@ -33,7 +34,7 @@ class Machines extends Component {
 
                 </Grid>
                 <div>
-                    <ListMachine/>
+                    <Tables/>
                 </div>
 
             </div>

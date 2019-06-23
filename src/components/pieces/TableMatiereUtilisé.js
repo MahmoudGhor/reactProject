@@ -35,43 +35,34 @@ function TableMatiereUtilis () {
               <thead className="bg-light">
               <tr>
                 <th scope="col" className="border-0">
-                  #
+                  Nom matiere
                 </th>
                 <th scope="col" className="border-0">
-                  First Name
+                  Prix par kg
                 </th>
                 <th scope="col" className="border-0">
-                  Last Name
+                  Poids
                 </th>
-                <th scope="col" className="border-0">
-                  Country
-                </th>
-                <th scope="col" className="border-0">
-                  City
-                </th>
-                <th scope="col" className="border-0">
-                  Phone
-                </th>
+
               </tr>
               </thead>
               <tbody>
               <tr>
-                <td>1</td>
+                <td><select>
+                  <option> aaa</option>
+                  <option> aaa</option>
+                  <option> aaa</option>
+                  <option> aaa</option>
+                  <option> aaa</option>
+                  <option> aaa</option>
+                </select></td>
                 <td>Ali</td>
                 <td>Kerry</td>
-                <td>Russian Federation</td>
-                <td>Gdańsk</td>
-                <td>107-0339</td>
-                <td/>
               </tr>
               <tr>
                 <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>Prix total : 50339</td>
                 <td/>
+                <td>Prix total</td>
               </tr>
               </tbody>
             </table>
