@@ -15,11 +15,6 @@ const deviSchema = new Schema({
         ref: 'client',
         required: true,
     },
-    id_commande: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'commande',
-        required: true,
-    },
     prix_taxé: {
         type: Number,
         required: true,
