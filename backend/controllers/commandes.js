@@ -1,4 +1,4 @@
-const commandesModel = require('../models/commande');
+const commandesModel = require('../models/ordreProduction');
 //hedha na9ess fil update wil create
 module.exports = {
     getById: function (req, res, next) {

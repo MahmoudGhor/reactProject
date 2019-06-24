@@ -14,15 +14,10 @@ const stockSchema = new Schema({
         type: Number,
         required: true
     },
-    poids: {
-        type: Number,
-        required: true
-    },
     prix_par_kg: {
         type: Number,
         required: true
-    },
-
+    }
 });
 
 module.exports = mongoose.model('stock', stockSchema)
