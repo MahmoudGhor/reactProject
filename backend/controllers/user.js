@@ -29,17 +29,37 @@ exports.createUser = (req, res, next) => {
     });
 };
 exports.authenticate = (req, res, next) => {
-  User.findOne({email: req.body.email}, function (err, userInfo) {
-    console.log(userInfo)
-    if (err) {
-      return res.json(err);
-    } else {
-      if (bcrypt.compareSync(req.body.password, userInfo.password)) {
-        const token = jwt.sign({id: userInfo._id}, req.app.get('secretKey'), {expiresIn: '24h'});
-        return res.json({status: "success", message: "user found!!!", data: {user: userInfo, token: token}});
-      } else {
-        return res.json({status: "error", message: "Invalid email/password!!!", data: null});
-      }
+  let fetchedUser;
+  User.findOne({email: req.body.email}).then(user => {
+    fetchedUser = user;
+    return bcrypt.compareSync(req.body.password, fetchedUser.password)
+  }).then(result => {
+    console.log(result);
+    if (!result) {
+      return res.status(401).json({
+        message: "Auth failed"
+      });
     }
-  });
+    const token = jwt.sign({
+      email: fetchedUser.email,
+      userId: fetchedUser._id,
+      name: fetchedUser.name,
+      lastname: fetchedUser.Last_Name,
+      permissionLevel: fetchedUser.permissionLevel,
+    }, req.app.get('secretKey'), {expiresIn: '24h'});
+    return res.status(200).json({
+      success: true,
+      token: "Bearer " + token
+    });
+
+
+  })
+    .catch(err => {
+      console.log(err);
+      return res.status(401).json({
+        message: "Invalid authentication credentials!"
+      });
+    });
+
+
 };
