@@ -42,7 +42,7 @@ export const setCurrentUser = decoded => {
 
 
 // Get user info
-/*export const getUserInfo = id => dispatch => {
+export const getUserInfo = id => dispatch => {
   axios
     .get(`/api/user/some-info/${id}`)
     .then(res =>
@@ -69,4 +69,4 @@ export const logoutUser = () => dispatch => {
   dispatch(setCurrentUser({}));
 };
 
-*/
+
