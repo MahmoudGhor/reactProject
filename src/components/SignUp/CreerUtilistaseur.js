@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -11,7 +11,11 @@ import InputLabel from '@material-ui/core/InputLabel';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import {registerUser} from '../../store/actions/registreAction';
 import withStyles from '@material-ui/core/styles/withStyles';
+import {Redirect} from "react-router-dom";
+import {connect} from "react-redux";
+import {compose} from "recompose";
 
 const styles = theme => ({
   main: {
@@ -45,8 +49,54 @@ const styles = theme => ({
   },
 });
 
-function SignIn(props) {
-  const { classes } = props;
+class SignUp extends  Component {
+  constructor(props) { 
+    super(props);
+    this.state = {
+      email: "",
+     pwd: "",
+     pwd2:"",
+     name : "",
+     lastname:"",
+    errors: {}
+    };
+  }
+
+  changeEmailAddress(e) {
+    this.setState({email: e.target.value});
+  }
+  changename(e) {
+    this.setState({name: e.target.value});
+  }
+  changelastname(e) {
+    this.setState({lastname: e.target.value});
+  }
+
+  changepassword(e) {
+    this.setState({pwd: e.target.value});
+  }
+  changepassword2(e) {
+    this.setState({pwd2: e.target.value});
+  }
+  clicked (e){
+    if (this.state.pwd === this.state.pwd2){
+      const userdata = {
+        email : this.state.email,
+        password : this.state.pwd,
+        name : this.state.name,
+        lastname: this.state.lastname
+      }
+        this.props.registerUser(userdata);
+    }else{
+      console.log('ya bhim moch kif kif ');
+    }
+  }
+
+
+  render () {
+
+const {classes} = this.props;
+const {errors} = this.state;
 
   return (
     <main className={classes.main}>
@@ -62,28 +112,29 @@ function SignIn(props) {
         <Typography component="h1" variant="h5">
           Bienvenue à SOPROCOM
         </Typography>
-        <form className={classes.form}>
+        <div className={classes.form}>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="email">Email Address</InputLabel>
-            <Input id="email" name="email" autoComplete="email" autoFocus />
+            <Input id="email" onChange={this.changeEmailAddress.bind(this)} name="email" autoComplete="email" autoFocus />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="nom">Nom</InputLabel>
-            <Input id="nom" name="nom" autoComplete="nom" autoFocus />
+            <Input id="nom" onChange={this.changename.bind(this)} name="nom" autoComplete="nom" autoFocus />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="prenom">Prenom</InputLabel>
-            <Input id="prenom" name="prenom" autoComplete="prenom" autoFocus />
+            <Input id="prenom"  onChange ={this.changelastname.bind(this)} name="prenom" autoComplete="prenom" autoFocus />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="password">Password</InputLabel>
-            <Input name="password" type="password" id="password" autoComplete="current-password" />
+            <Input name="password" onChange={this.changepassword.bind(this)} type="password" id="password" autoComplete="current-password" />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="password">Confirmation Password</InputLabel>
-            <Input name="password" type="password" id="password" autoComplete="current-password" />
+            <Input name="password"  onChange={this.changepassword2.bind(this)} type="password" id="password" autoComplete="current-password" />
           </FormControl>
           <Button
+          onClick ={this.clicked.bind(this)}
             type="submit"
             fullWidth
             variant="contained"
@@ -92,14 +143,23 @@ function SignIn(props) {
           >
             Sign Up
           </Button>
-        </form>
+        </div>
       </Paper>
     </main>
   );
+  }
 }
-
-SignIn.propTypes = {
+SignUp.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SignIn);
+const mapStateToProps = state => ({
+  errors: state.errors
+});
+
+export default compose(
+  (withStyles(styles)),
+  connect(
+    mapStateToProps,
+    {registerUser})
+)(SignUp);
