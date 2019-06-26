@@ -88,9 +88,10 @@ class SignUp extends  Component {
       }
         this.props.registerUser(userdata);
     }else{
-      console.log('ya bhim moch kif kif ');
+      console.log('no');
     }
   }
+
 
 
   render () {
