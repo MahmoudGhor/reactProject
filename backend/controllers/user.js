@@ -63,3 +63,21 @@ exports.authenticate = (req, res, next) => {
 
 
 };
+
+exports.getProfileForConnectedUser = (req, res, next) => {
+  User.findOne({_id: req.userData.userId})
+    .then(user => {
+      if (!user) {
+        return res.status(401).json({
+          message: "user not found"
+        });
+      }
+      return res.status(200).json(user);
+    })
+    .catch(err => {
+      console.log(err);
+      return res.status(401).json({
+        message: "Fetching profile failed!"
+      });
+    });
+};

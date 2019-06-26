@@ -1,10 +1,6 @@
-import React from "react";
-import { Redirect } from "react-router-dom";
+import React, {Component} from 'react';
 
-// Layout Types
 import { DefaultLayout } from "./layouts";
-
-// Route Views
 import BlogOverview from "./views/BlogOverview";
 import UserProfileLite from "./views/UserProfileLite";
 import AddNewPost from "./views/AddNewPost";
@@ -21,82 +17,59 @@ import OffrePrix from "./components/offreDePrix/OffreDePrixs";
 import Pieces from "./components/pieces/Pieces";
 import SignIn from "./components/signIn/SignIn";
 import SignUp from "./components/SignUp/CreerUtilistaseur";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import PrivateRoute from "./components/common/PrivateRoute";
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 
-export default [
-  {
-    path: "/",
-    exact: true,
-    layout: DefaultLayout,
-    component: () => <Redirect to="/SignIn" />
-  },
-  {
-    path: "/blog-overview",
-    layout: DefaultLayout,
-    component: BlogOverview
-  },
-  {
-    path: "/user-profile-lite",
-    layout: DefaultLayout,
-    component: UserProfileLite
-  },
-  {
-    path: "/add-new-post",
-    layout: DefaultLayout,
-    component: AddNewPost
-  },
-  {
-    path: "/errors",
-    layout: DefaultLayout,
-    component: Errors
-  },
-  {
-    path: "/components-overview",
-    layout: DefaultLayout,
-    component: ComponentsOverview
-  },
-  {
-    path: "/tables",
-    layout: DefaultLayout,
-    component: Tables
-  },
-  {
-    path: "/blog-posts",
-    layout: DefaultLayout,
-    component: BlogPosts
-  },
-  {
-    path: "/clients",
-    layout: DefaultLayout,
-    component: Client
-  },{
-    path: "/Utilisateurs",
-    layout: DefaultLayout,
-    component: Utilisateur
-  },{
-    path: "/Devis",
-    layout: DefaultLayout,
-    component: Devis
-  },{
-    path: "/Stocks",
-    layout: DefaultLayout,
-    component: Stock
-  },{
-    path: "/Machines",
-    layout: DefaultLayout,
-    component: Machine
-  },{
-    path: "/OffresDePrix",
-    layout: DefaultLayout,
-    component: OffrePrix
-  },{
-    path: "/Pieces",
-    layout: DefaultLayout,
-    component: Pieces
-  },{
-    path: "/SignIn",
-    layout: SignIn
-  },{
-    path: "/SignUp",
-    layout: SignUp
-  },
-];
+class Routes extends Component {
+  state = {
+    isAuthenticated: false
+  };
+
+  static getDerivedStateFromProps(props) {
+    const { isAuth } = props;
+
+    if (isAuth) {
+      return { isAuthenticated: true };
+    } else {
+      return { isAuthenticated: false };
+    }
+  }
+  render() {
+    const { isAuthenticated } = this.state;
+    return (
+      <Router>
+        <React.Fragment>
+        {isAuthenticated ? <DefaultLayout key={1} /> :null}
+        <Switch>
+          <PrivateRoute exact path="/Clients" component={Client} />
+          <PrivateRoute exact path="/Utilisateurs" component={Utilisateur} />
+          <PrivateRoute exact path="/Devis" component={Devis} />
+          <PrivateRoute exact path="/Stocks" component={Stock} />
+          <PrivateRoute exact path="/Machines" component={Machine} />
+          <PrivateRoute exact path="/OffresDePrix" component={OffrePrix} />
+          <PrivateRoute exact path="/Pieces" component={Pieces} />
+          <Route exact path="/SignIn" component={SignIn} />
+          <Route exact path="/SignUp" component={SignUp} />
+          <Route exact path="*" component={SignIn} />
+
+
+        </Switch>
+        </React.Fragment>
+      </Router>
+    );
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    isAuth: state.auth.isAuthenticated
+  };
+};
+
+Routes.propTypes = {
+  isAuth: PropTypes.bool.isRequired
+};
+
+export default connect(mapStateToProps) (Routes);

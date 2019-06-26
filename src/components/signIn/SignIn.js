@@ -15,7 +15,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import {loginUser} from "../../store/actions/authActions";
 import {connect} from "react-redux";
 import {compose} from "recompose";
-import { Link, Redirect } from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 
 const styles = theme => ({
   main: {
@@ -66,7 +66,7 @@ class SignIn extends Component {
     }
 
     if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
+      this.setState({errors: nextProps.errors});
     }
   }
 
@@ -121,12 +121,14 @@ class SignIn extends Component {
           <div className={classes.form}>
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="email">Email Address</InputLabel>
-              <Input id="email" error={errors.email} onChange={this.changeEmailAddress.bind(this)} name="email" autoComplete="email"
+              <Input id="email" error={errors.email} onChange={this.changeEmailAddress.bind(this)} name="email"
+                     autoComplete="email"
                      autoFocus/>
             </FormControl>
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="password">Password</InputLabel>
-              <Input name="password" error={errors.password} onChange={this.changepassword.bind(this)} type="password" id="password"
+              <Input name="password" error={errors.password} onChange={this.changepassword.bind(this)} type="password"
+                     id="password"
                      autoComplete="current-password"/>
             </FormControl>
             {errors.message ? (
@@ -136,7 +138,7 @@ class SignIn extends Component {
               ""
             )}
             <FormControlLabel
-              control={<Checkbox value="remember"  color="primary"/>}
+              control={<Checkbox value="remember" color="primary"/>}
               label="Remember me"
             />
 
@@ -152,17 +154,19 @@ class SignIn extends Component {
             </Button>
             <Typography component="h6" variant="h6" style={{marginTop: '10px', fontSize: '14px'}}>
               Vous n'avez pas de compte ?
+              <Link to={"/signUp"}>
 
+                <Button style={{marginTop: '0px'}}
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}
 
-              <Button style={{marginTop: '0px'}}
-                      type="submit"
-                      fullWidth
-                      variant="contained"
-                      color="primary"
-                      className={classes.submit}
-              >
-                Sign Up
-              </Button>
+                >
+                  Sign Up
+                </Button>
+              </Link>
             </Typography>
           </div>
         </Paper>
@@ -176,7 +180,7 @@ SignIn.propTypes = {
   classes: PropTypes.object.isRequired,
   loginUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  errors : PropTypes.object.isRequired
+  errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({

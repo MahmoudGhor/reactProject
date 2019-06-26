@@ -50,7 +50,7 @@ const styles = theme => ({
 });
 
 class SignUp extends  Component {
-  constructor(props) { 
+  constructor(props) {
     super(props);
     this.state = {
       email: "",
@@ -94,6 +94,11 @@ class SignUp extends  Component {
 
 
   render () {
+    const {from} = this.props.location.state || {from: {pathname: "/clients"}};
+    const {auth} = this.props;
+    if (auth.isAuthenticated === true) {
+      return <Redirect to={from}/>;
+    }
 
 const {classes} = this.props;
 const {errors} = this.state;
@@ -150,11 +155,13 @@ const {errors} = this.state;
   }
 }
 SignUp.propTypes = {
+
   classes: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-  errors: state.errors
+  errors: state.errors,
+  auth: state.auth,
 });
 
 export default compose(

@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import {CreerClientForClientNavBar} from '../buttons/index';
@@ -21,23 +21,28 @@ const styles = theme => ({
 
 class Clients extends Component {
   render() {
-    const { classes } = this.props;
+    const {classes} = this.props;
     return (
-      <div className={classes.root}>
-        <Grid container spacing={24}>
-          <Grid item xs={12}>
-            <Paper className={classes.paper}><CreerClientForClientNavBar/></Paper>
-          </Grid>
+      <React.Fragment>
+        <main className="main-content p-0 col-sm-12 col-md-9 offset-md-3 col-lg-10 offset-lg-2">
+          <div className={classes.root}>
+            <Grid container spacing={24}>
+              <Grid item xs={12}>
+                <Paper className={classes.paper}><CreerClientForClientNavBar/></Paper>
+              </Grid>
 
 
-        </Grid>
+            </Grid>
 
 
-        <ListeUtilisateurs/>
-      </div>
+            <ListeUtilisateurs/>
+          </div>
+        </main>
+      </React.Fragment>
     );
 
 
   }
 }
-export default  withStyles(styles) (Clients);
+
+export default withStyles(styles)(Clients);

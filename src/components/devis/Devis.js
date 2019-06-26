@@ -25,7 +25,9 @@ class Devis extends Component {
     render() {
         const { classes } = this.props;
         return (
-            <div className={classes.root}>
+          <React.Fragment>
+            <main className="main-content p-0 col-sm-12 col-md-9 offset-md-3 col-lg-10 offset-lg-2">
+          <div className={classes.root}>
                 <Grid container spacing={24}>
                     <Grid item xs={12}>
                         <Paper className={classes.paper}><CreerDevis /></Paper>
@@ -38,6 +40,8 @@ class Devis extends Component {
 
                 </div>
             </div>
+            </main>
+          </React.Fragment>
         );
 
 

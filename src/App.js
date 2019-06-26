@@ -1,7 +1,5 @@
-import React from "react";
-import {BrowserRouter as Router, Route} from "react-router-dom";
-
-import routes from "./routes";
+import React, {Component} from 'react';
+import Routes from "./routes";
 import withTracker from "./withTracker";
 import {Provider} from "react-redux";
 import store from "./store/store";
@@ -10,8 +8,6 @@ import setAuthToken from "./utils/setAuthToken";
 import {setCurrentUser, logoutUser} from "./store/actions/authActions";
 
 
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./shards-dashboard/styles/shards-dashboards.1.1.0.min.css";
 // Check for token
 if (localStorage.jwtToken) {
   // Set auth token header auth
@@ -33,27 +29,16 @@ if (localStorage.jwtToken) {
   }
 }
 
-export default () => (
-  <Router basename={process.env.REACT_APP_BASENAME || ""}>
-    <div>
-      {routes.map((route, index) => {
-        return (
-          <Provider store={store}>
-            <Route
-              key={index}
-              path={route.path}
-              exact={route.exact}
-              component={withTracker(props => {
-                return (
-                  <route.layout {...props}>
-                    <route.component {...props} />
-                  </route.layout>
-                );
-              })}
-            />
-          </Provider>
-        );
-      })}
-    </div>
-  </Router>
-);
+class App extends Component {
+  render() {
+    return (
+      <div>
+        <Provider store={store}>
+          <Routes />
+        </Provider>
+      </div>
+    );
+  }
+}
+
+export default App;
