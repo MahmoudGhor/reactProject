@@ -18,7 +18,7 @@ stockModel.find({}, function(err, stocks){
    } else{
     for (let stock of stocks) {
      stocksList.push({id: stock._id, nomP: stock.nomP, poids: stock.poids, prix_par_kg: stock.prix_par_kg ,
-      quantité : stock.quantité});
+      quantité : stock.quantité , etat:stock.etat});
     }
     res.json({status:"success", message: "stocks list found!!!", data:{stocks: stocksList}});
        
@@ -44,7 +44,7 @@ deleteById: function(req, res, next) {
   });
  },
 create: function(req, res, next) {
-  stockModel.create({ nomP: req.body.nomP, poids: req.body.poids, prix_par_kg: req.body.prix_par_kg ,quantité:req.body.quantité }, function (err, result) {
+  stockModel.create({ nomP: req.body.nomP, poids: req.body.poids, prix_par_kg: req.body.prix_par_kg ,quantité:req.body.quantité, etat:req.body.etat, function (err, result) {
       if (err) 
        next(err);
       else

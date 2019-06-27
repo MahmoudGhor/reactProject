@@ -12,6 +12,10 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
+import {Redirect} from "react-router-dom";
+import {connect} from "react-redux";
+import {compose} from "recompose";
+
 
 import Dialog from '@material-ui/core/Dialog';
 
@@ -47,10 +51,19 @@ const styles = theme => ({
   },
 });
 class CreerStock extends React.Component {
-  state = {
+  constructor(props) {
+    super(props);
+    this.state = {
     activeStep: 0,
-    disponibilté: false
+    disponibilté: false,
+    nomP: "",
+    quantité: "",
+    prix_par_kg :"",
+    etat:"",
+     
+      errors: {}
   };
+}
 
   handleClose = () => {
     this.props.onClose(this.props.selectedValue);
@@ -58,12 +71,40 @@ class CreerStock extends React.Component {
   handlecheckboxchange =() =>{
     this.setState(state => ({disponibilté: !state.disponibilté}))
   }
+  changenomP(e) {
+    this.setState({nomP: e.target.value});
+  }
+
+  changequantité(e) {
+    this.setState({quantité: e.target.value});
+  }
+  changeprix_par_kg(e) {
+    this.setState({prix_par_kg: e.target.value});
+  }
+  changeetat() {
+    this.setState(state => ({etat: !state.etat}));
+    console.log(this.state.etat)
+  }
+  
+
+  clicked (e){
+  
+    const userdata = {
+        nomP : this.state.nomP,
+        quantité : this.state.quantité,
+        prix_par_kg : this.state.prix_par_kg,
+        etat : this.state.etat,
+       
+      }
+        console.log(userdata);
+    }
+
 
 
   render() {
 
-    const { activeStep } = this.state;
     const { classes, onClose, selectedValue, ...other } = this.props;
+    
 
 
   return (
@@ -82,43 +123,40 @@ class CreerStock extends React.Component {
         <Typography component="h1" variant="h5">
          Nouveau Produit
         </Typography>
-        <form className={classes.form}>
+        <div className={classes.form}>
 
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor=" Name">Nom</InputLabel>
-            <Input id=" Name" name=" Name" autoComplete=" Name" autoFocus />
+            <Input id=" Name"  onChange={this.changenomP.bind(this)} name=" Name" autoComplete=" Name" autoFocus />
           </FormControl>
 
 
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor=" quantité">quantité</InputLabel>
-            <Input id=" quantité" name=" quantité" autoComplete=" quantité" autoFocus />
+            <Input id=" quantité"   onChange={this.changeprix_par_kg.bind(this)}name=" quantité" autoComplete=" quantité" autoFocus />
           </FormControl>
 
 
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="prix_par_kg">prix par kg</InputLabel>
-            <Input id="prix_par_kg" name="prix_par_kg" autoComplete="prix_par_kg" autoFocus />
+            <Input id="prix_par_kg" onChange={this.changeprix_par_kg.bind(this)} name="prix_par_kg" autoComplete="prix_par_kg" autoFocus />
           </FormControl>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="poids">poids</InputLabel>
-            <Input name="poids" type="poids" id="poids" autoComplete="current-poids" />
-          </FormControl>
+          
           <FormControlLabel
-            control={<Checkbox value={this.state.disponibilté} onChange={this.handlecheckboxchange} color="primary" />}
-            label={this.state.disponibilté? "disponible" : "indisponible"}
+            control={<Checkbox  onChange={this.changeetat.bind(this)} color="primary" />}
+            label={this.state.etat? "fonctionnelle" : "en panne"}
           />
-
           <Button
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={this.clicked.bind(this)}
           >
             ajouter un produit
           </Button>
-        </form>
+        </div>
       </Paper>
     </main>
     </Dialog>
@@ -130,5 +168,16 @@ CreerStock.propTypes = {
   onClose: PropTypes.func,
   selectedValue: PropTypes.string,
 };
+const mapStateToProps = state => ({
+  errors: state.errors,
+  auth: state.auth,
+});
 
-export default withStyles(styles)(CreerStock);
+export default compose(
+  (withStyles(styles)),
+  connect(
+    mapStateToProps,
+    )
+)(CreerStock);;
+
+
