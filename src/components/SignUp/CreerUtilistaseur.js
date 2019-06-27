@@ -125,11 +125,11 @@ const {errors} = this.state;
           </FormControl>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="nom">Nom</InputLabel>
-            <Input id="nom" onChange={this.changename.bind(this)} name="nom" autoComplete="nom" autoFocus />
+            <Input id="nom" onChange={this.changename.bind(this)} name="nom" autoComplete="nom" />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="prenom">Prenom</InputLabel>
-            <Input id="prenom"  onChange ={this.changelastname.bind(this)} name="prenom" autoComplete="prenom" autoFocus />
+            <Input id="prenom"  onChange ={this.changelastname.bind(this)} name="prenom" autoComplete="prenom"  />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="password">Password</InputLabel>

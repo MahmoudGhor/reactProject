@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Container, Row, Col, Card, CardHeader, CardBody } from "shards-react";
+import {Container, Row, Col, Card, CardHeader, CardBody} from "shards-react";
 import swal from 'sweetalert';
 
 
@@ -7,37 +7,31 @@ import PageTitle from "../components/common/PageTitle";
 import IconButton from '@material-ui/core/IconButton';
 import toRenderProps from 'recompose/toRenderProps';
 import withState from 'recompose/withState';
+import TableDonnéeUtilisateur from "../components/utilisateur/tableDonnéeUtilisateur";
+
 const WithState = toRenderProps(withState('anchorEl', 'updateAnchorEl', null));
 
 class Tables extends Component {
 
-  clicked = () => {
-    swal({
-      title: "Are you sure?",
-      text: "Once deleted, you will not be able to recover this imaginary file!",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-    })
-      .then((willDelete) => {
-        if (willDelete) {
-          swal("Poof! Your imaginary file has been deleted!", {
-            icon: "success",
-          });
-        } else {
-          swal("Your imaginary file is safe!");
-        }
-      });
-  };
 
   render() {
+
+    let interfaceDetailsUsers = [];
+    try {
+      interfaceDetailsUsers = this.props.users.map(user => (
+        <TableDonnéeUtilisateur key={user._id} user={user}/>
+      ));
+
+    } catch (err) {
+      interfaceDetailsUsers = "no users";
+    }
 
     return (
       <div>
 
 
         <WithState>
-          {({ anchorEl, updateAnchorEl }) => {
+          {({anchorEl, updateAnchorEl}) => {
             const open = Boolean(anchorEl);
             const handleClose = () => {
               updateAnchorEl(null);
@@ -80,20 +74,7 @@ class Tables extends Component {
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                              <td>Russian Federation</td>
-                              <td>Gdańsk</td>
-                              <td>107-0339</td>
-                              <td><IconButton onClick={this.clicked.bind(this)}>
-                                <img style={{width: '30px', height: '30px', borderRadius: '10px'}}
-                                     src={window.location.origin + '/images/poubelle.png'}/>
-                              </IconButton></td>
-                              <td><IconButton>
-                                <img style={{width: '30px', height: '30px', borderRadius: '10px'}}
-                                     src={window.location.origin + '/images/update.png'}/>
-                              </IconButton></td>
-                              <td/>
-                            </tr>
+                            {interfaceDetailsUsers}
                             </tbody>
                           </table>
                         </CardBody>

@@ -6,6 +6,8 @@ import Grid from '@material-ui/core/Grid';
 import {CreerUtilisateur} from '../buttons/index';
 import ListeUtilisateurs from './listeUtilisateurs';
 import Tables from '../../views/Tables';
+import axios from "axios";
+import Spinner from "../common/Spinner";
 
 
 const styles = theme => ({
@@ -21,8 +23,43 @@ const styles = theme => ({
 
 
 class Utilisateur extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      users: [],
+      etat:false,
+    }
+  }
+
+  componentDidMount() {
+    axios({
+      method: 'get',
+      url: 'http://localhost:3001/application/user/'
+
+    }).then((res) => {
+      console.log(res.data.data.users);
+      this.setState({
+        etat:true,
+        users: res.data.data.users,
+      })
+    })
+
+
+
+  }
   render() {
+    if (this.state.users.length === 0 && this.state.etat === false ) {
+      return <Spinner/>;
+    }
+
     const {classes} = this.props;
+    let inerfaceTableUsers= [];
+    try {
+      inerfaceTableUsers = <Tables users={this.state.users}/>
+
+    } catch (err) {
+      inerfaceTableUsers = "no users";
+    }
     return (
       <React.Fragment>
         <main className="main-content p-0 col-sm-12 col-md-9 offset-md-3 col-lg-10 offset-lg-2">
@@ -38,7 +75,7 @@ class Utilisateur extends Component {
 
             </div>
             <div>
-              <Tables/>
+              {inerfaceTableUsers}
             </div>
 
 

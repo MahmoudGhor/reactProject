@@ -81,3 +81,15 @@ exports.getProfileForConnectedUser = (req, res, next) => {
       });
     });
 };
+
+
+exports.getAllUsers = (req, res, next) => {
+  User.find({}, function (err, users) {
+    if (err) {
+      return res.json(err);
+    } else {
+      return res.json({status: "success", message: "clients list found!!!", data: {users: users}});
+
+    }
+  });
+};

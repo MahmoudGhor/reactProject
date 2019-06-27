@@ -1,34 +1,42 @@
 import React, {Component} from 'react';
-import { ReactMUIDatatable } from "react-material-ui-datatable";
+import {ReactMUIDatatable} from "react-material-ui-datatable";
+import Spinner from "../common/Spinner";
 
 const columns = [
   {
-    name: "firstName",
-    label: "First Name"
+    name: "adresse",
+    label: "adresse"
+  }, {
+    name: "adresseemail",
+    label: "adresse email"
+  }, {
+    name: "datenaissance",
+    label: "date"
   },
   {
-    name: "lastName",
-    label: "Last Name"
+    name: "name",
+    label: "name"
   },
   {
-    name: "age",
-    label: "Age"
-  }
+    name: "lastname",
+    label: "lastname"
+  },
+  {
+    name: "numero",
+    label: "numero"
+  },
+
 ];
 
-const data = [
-  { firstName: "Kylynn", lastName: "Lathey", age: 19 },
-  { firstName: "Cly", lastName: "Dukelow", age: 46 },
-  { firstName: "Afton", lastName: "Chaffer", age: 34 },
-  { firstName: "Deva", lastName: "Cowope", age: 22 }
-];
 
 class ListeUtilisateurs extends Component {
-
   render() {
+    let listClient;
+    listClient = <ReactMUIDatatable title={""} data={this.props.clients} columns={columns}/>
+    const {clients} = this.props.clients;
     return (
       <div>
-        <ReactMUIDatatable title={""} data={data} columns={columns}  />
+        {listClient}
       </div>
     );
   }

@@ -9,6 +9,8 @@ import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import AddressForm from './AddressForm';
+import {connect} from "react-redux";
+import {compose} from "recompose";
 
 import Review from './ReviewForm';
 import Dialog from '@material-ui/core/Dialog';
@@ -50,49 +52,61 @@ const styles = theme => ({
 
 
 
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <AddClient />;
 
-    default:
-      throw new Error('Unknown step');
-  }
-}
 
 class Checkout extends React.Component {
-  state = {
-    activeStep: 0,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeStep: 0,
+    };
+  }
+
+
+  getStepContent(step) {
+    switch (step) {
+      case 0:
+        return <AddClient getClient={this.getClientFromAddClient.bind(this)}/>;
+
+      default:
+        throw new Error('Unknown step');
+    }
+  }
 
   handleClose = () => {
     this.props.onClose(this.props.selectedValue);
+
   };
+
+  getClientFromAddClient = e => {
+    console.log('dkhal l checkout');
+    this.props.valueclient(e);
+  }
 
 
   render() {
 
-    const { activeStep } = this.state;
-    const { classes, onClose, selectedValue, ...other } = this.props;
+    const {activeStep} = this.state;
+    const {classes, onClose, selectedValue, ...other} = this.props;
 
     return (
       <Dialog onClose={this.handleClose} aria-labelledby="simple-dialog-title" {...other}>
         <React.Fragment>
           <main className={classes.layout}>
             <Paper className={classes.paper}>
-            
-             <React.Fragment>
-             
-                  <React.Fragment>
-              
-                  </React.Fragment>
-                
-                    <React.Fragment>
-                      {getStepContent(activeStep)}
-                      
-                    </React.Fragment>
 
-                  
+              <React.Fragment>
+
+                <React.Fragment>
+
+                </React.Fragment>
+
+                <React.Fragment>
+                  {this.getStepContent(activeStep)}
+
+                </React.Fragment>
+
+
               </React.Fragment>
             </Paper>
           </main>
@@ -106,7 +120,17 @@ Checkout.propTypes = {
   classes: PropTypes.object.isRequired,
   onClose: PropTypes.func,
   selectedValue: PropTypes.string,
+  valueclient: PropTypes.object
 };
 
-export default withStyles(styles)(Checkout);
+const mapStateToProps = state => ({});
+
+export default compose(
+  (withStyles(styles)),
+  connect(
+    mapStateToProps,
+  )
+)(Checkout);
+
+
 

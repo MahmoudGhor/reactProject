@@ -36,6 +36,10 @@ class ContainedButtons extends Component {
     this.setState({ selectedValue: value, open: false });
   };
 
+  getValueClient = value => {
+    this.props.buttonCreerClient(value);
+  }
+
   render() {
     const {classes} = this.props;
 
@@ -45,6 +49,7 @@ class ContainedButtons extends Component {
             nouveau client
           </Button>
           <Checkout
+              valueclient={this.getValueClient.bind(this)}
               selectedValue={this.state.selectedValue}
               open={this.state.open}
               onClose={this.handleClose}
