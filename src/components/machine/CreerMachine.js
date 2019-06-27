@@ -12,6 +12,10 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
+import {Redirect} from "react-router-dom";
+import {connect} from "react-redux";
+import {compose} from "recompose";
+
 
 import Dialog from '@material-ui/core/Dialog';
 
@@ -49,8 +53,44 @@ const styles = theme => ({
 class CreerMachine extends React.Component {
   state = {
     activeStep: 0,
-    fonctionne: false
+    fonctionne: false,
+    name: "",
+    reference: "",
+    prix_par_hr:"",
+    nombre_hr_travail :"",
+    etat: false,
+    
+      errors: {}
   };
+  changereference(e) {
+    this.setState({reference: e.target.value});
+  }
+
+  changename(e) {
+    this.setState({name: e.target.value});
+  }
+  changeprix_par_Heur(e) {
+    this.setState({prix_par_hr: e.target.value});
+  }
+  changenombre_hr_travail(e) {
+    this.setState({nombre_hr_travail: e.target.value});
+  }
+  changeetat() {
+    this.setState(state => ({etat: !state.etat}));
+    console.log(this.state.etat)
+  }
+  clicked (e){
+  
+      const userdata = {
+        name: this.state.name,
+        reference : this.state.reference,
+        name : this.state.name,
+        prix_par_hr: this.state.prix_par_hr,
+        nombre_hr_travail: this.state.nombre_hr_travail,
+        etat : this.state.etat
+      }
+        console.log(userdata);
+    }
 
   handleClose = () => {
     this.props.onClose(this.props.selectedValue);
@@ -64,6 +104,9 @@ class CreerMachine extends React.Component {
 
     const { activeStep } = this.state;
     const { classes, onClose, selectedValue, ...other } = this.props;
+    
+
+    
 
 
   return (
@@ -86,19 +129,19 @@ class CreerMachine extends React.Component {
           </FormControl>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor=" Name">reference</InputLabel>
-            <Input id="Name" name=" Name" autoComplete="Name" autoFocus />
+            <Input id="Name"  onChange={this.changename.bind(this)} name=" Name" autoComplete="Name" autoFocus />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="prix_par_Heur">prix par Heur</InputLabel>
-            <Input id="prix_par_Heur" name="prix_par_Heur" autoComplete="prix_par_Heur" autoFocus />
+            <Input id="prix_par_Heur"  onChange={this.changeprix_par_Heur.bind(this)} name="prix_par_Heur" autoComplete="prix_par_Heur" autoFocus />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="nombre_hr_travail">nombre d'heur de travail </InputLabel>
-            <Input name="nombre_hr_travail" type="nombre_hr_travail" id="nombre_hr_travail" autoComplete="current-nombre_hr_travail" />
+            <Input name="nombre_hr_travail"  onChange={this.changenombre_hr_travail.bind(this)} type="nombre_hr_travail" id="nombre_hr_travail" autoComplete="current-nombre_hr_travail" />
           </FormControl>
           <FormControlLabel
-            control={<Checkbox value={this.state.fonctionne} onChange={this.handlecheckboxchange} color="primary" />}
-            label={this.state.fonctionne? "fonctionnelle" : "en panne"}
+            control={<Checkbox  onChange={this.changeetat.bind(this)} color="primary" />}
+            label={this.state.etat? "fonctionnelle" : "en panne"}
           />
 
           <Button
@@ -107,6 +150,7 @@ class CreerMachine extends React.Component {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={this.clicked.bind(this)}
           >
             ajouter une Machine
           </Button>
@@ -117,10 +161,14 @@ class CreerMachine extends React.Component {
   );
 }
 }
-CreerMachine.propTypes = {
-  classes: PropTypes.object.isRequired,
-  onClose: PropTypes.func,
-  selectedValue: PropTypes.string,
-};
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
 
-export default withStyles(styles)(CreerMachine);
+export default compose(
+  (withStyles(styles)),
+  connect(
+    mapStateToProps,
+    )
+)(CreerMachine);;

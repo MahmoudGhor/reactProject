@@ -17,6 +17,10 @@ const stockSchema = new Schema({
     prix_par_kg: {
         type: Number,
         required: true
+    },
+    etat:{
+        type : Boolean,
+        required:true,
     }
 });
 
