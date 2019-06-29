@@ -93,3 +93,21 @@ exports.getAllUsers = (req, res, next) => {
     }
   });
 };
+
+
+exports.deleteUser = (req, res, next) => {
+  User.findByIdAndRemove(req.params.id, function (err, user) {
+    if (err)
+      return res.json(err);
+    else {
+      User.find({}, function (err, users) {
+        if (err) {
+          return res.json(err);
+        } else {
+          return res.json({status: "success", message: "clients list found!!!", data: {users: users}});
+
+        }
+      });
+    }
+  });
+};

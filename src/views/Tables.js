@@ -13,18 +13,22 @@ const WithState = toRenderProps(withState('anchorEl', 'updateAnchorEl', null));
 
 class Tables extends Component {
 
-
+  getValueFromTable = e => {
+    this.props.idUserFromDate(e);
+  }
   render() {
 
     let interfaceDetailsUsers = [];
     try {
       interfaceDetailsUsers = this.props.users.map(user => (
-        <TableDonnéeUtilisateur key={user._id} user={user}/>
+        <TableDonnéeUtilisateur valueFromTable={this.getValueFromTable.bind(this)} key={user._id} user={user}/>
       ));
 
     } catch (err) {
       interfaceDetailsUsers = "no users";
     }
+
+
 
     return (
       <div>

@@ -46,6 +46,18 @@ class Utilisateur extends Component {
 
 
 
+  };
+
+  getIdUserToDelete = e => {
+    axios({
+      method: 'delete',
+      url: 'http://localhost:3001/application/user/'+e
+
+    }).then((res) => {
+      this.setState({
+        users: res.data.data.users,
+      })
+    })
   }
   render() {
     if (this.state.users.length === 0 && this.state.etat === false ) {
@@ -55,7 +67,7 @@ class Utilisateur extends Component {
     const {classes} = this.props;
     let inerfaceTableUsers= [];
     try {
-      inerfaceTableUsers = <Tables users={this.state.users}/>
+      inerfaceTableUsers = <Tables idUserFromDate={this.getIdUserToDelete.bind(this)} users={this.state.users}/>
 
     } catch (err) {
       inerfaceTableUsers = "no users";

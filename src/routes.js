@@ -52,6 +52,10 @@ class Routes extends Component {
           <PrivateRoute exact path="/Pieces" component={Pieces} />
           <Route exact path="/SignIn" component={SignIn} />
           <Route exact path="/SignUp" component={SignUp} />
+          <Route exact path="/BlogPosts" component={BlogPosts} />
+          <Route exact path="/AddNewPost" component={AddNewPost} />
+          <Route exact path="/ComponentsOverview" component={ComponentsOverview} />
+          <Route exact path="/Tables" component={Tables} />
           <Route exact path="*" component={SignIn} />
 
 

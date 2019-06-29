@@ -6,6 +6,10 @@ import Grid from '@material-ui/core/Grid';
 import {CreateOffreDePrixButton} from '../buttons/index';
 import ListOffreDePrix from './OffreDePrixList';
 import Tables from './TablesOffres';
+import OffreDePrixMenu from './OffreDePrixMenu';
+import OffreDePrixTache from './OffreDePrixTache';
+import OffreDePrixSousTraitance from './OffreDePrixSousTraitance';
+import FactureOffre from './FactureOffre';
 
 
 const styles = theme => ({
@@ -37,46 +41,8 @@ class OffreDePrix extends Component {
             <div>
               <Tables/>
             </div>
+            <OffreDePrixSousTraitance/>
 
-            <div>
-              <p><h5><span> date: .... </span> <span> client:..... </span> <span> quantité : ...... </span></h5></p>
-              <p> Numero d'offre de prix : ............ </p>
-              <p> matières: ................ </p>
-              <h5> tache </h5>
-              <table border='2'>
-                <tr>
-                  <td> machine</td>
-                  <td> nbre d'heure</td>
-                  <td> prix de fabrication</td>
-                </tr>
-                <tr>
-                  <td> machine1</td>
-                  <td> 5 heures</td>
-                  <td> 10 dinar</td>
-                </tr>
-              </table>
-              <h5> Soutraitence </h5>
-              <table border='2'>
-                <tr>
-                  <td> Prix de soutraitence</td>
-                  <td> prix de traitement</td>
-                  <td> prix de peinture</td>
-                </tr>
-                <tr>
-                  <td> 10 dinar</td>
-                  <td> 10 dinar</td>
-                  <td> 10 dinar</td>
-                </tr>
-              </table>
-              <center><h5> elemnt standars </h5></center>
-              <ul>
-                <li><h6> prix total = </h6> <p> aaaa </p></li>
-                <li><h6> prix taxé = </h6> <p> aaaa </p></li>
-                <li><h6> droit de timbres = </h6> <p> aaaa </p></li>
-                <li><h6> marge de prix = </h6> <p> aaaa </p></li>
-                <li><h6> prix total offert = </h6> <p> aaaa </p></li>
-              </ul>
-            </div>
 
 
           </div>

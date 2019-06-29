@@ -3,21 +3,29 @@ import IconButton from "@material-ui/core/IconButton";
 import swal from "sweetalert";
 
 class TableDonnéeUtilisateur extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      id:null
+    }
+  }
   clicked = () => {
+    this.state.id = this.props.user._id;
     swal({
-      title: "Are you sure?",
-      text: "Once deleted, you will not be able to recover this imaginary file!",
+      title: "Êtes-vous sûr?",
+      text: "Une fois supprimé, vous ne pourrez plus récupérer cet utilisateur!",
       icon: "warning",
       buttons: true,
       dangerMode: true,
     })
       .then((willDelete) => {
         if (willDelete) {
-          swal("Poof! Your imaginary file has been deleted!", {
+          this.props.valueFromTable(this.state.id);
+          swal("Utilisateur a été supprimé avec succes", {
             icon: "success",
           });
         } else {
-          swal("Your imaginary file is safe!");
+          swal("Suppression annulée!");
         }
       });
   };

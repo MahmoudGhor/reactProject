@@ -47,7 +47,7 @@ class Stocks extends Component {
             </Grid>
             <div>
               <MUIDataTable
-                title={"Employee List"}
+                title={"Stock List"}
                 data={data}
                 columns={columns}
                 options={options}
