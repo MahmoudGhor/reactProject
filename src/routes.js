@@ -20,6 +20,7 @@ import SignUp from "./components/SignUp/CreerUtilistaseur";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import PrivateRoute from "./components/common/PrivateRoute";
+import PrivateRouteUser from "./components/common/PrivateRouteUser";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 
 class Routes extends Component {
@@ -44,7 +45,7 @@ class Routes extends Component {
         {isAuthenticated ? <DefaultLayout key={1} /> :null}
         <Switch>
           <PrivateRoute exact path="/Clients" component={Client} />
-          <PrivateRoute exact path="/Utilisateurs" component={Utilisateur} />
+          <PrivateRouteUser exact path="/Utilisateurs" component={Utilisateur} />
           <PrivateRoute exact path="/Devis" component={Devis} />
           <PrivateRoute exact path="/Stocks" component={Stock} />
           <PrivateRoute exact path="/Machines" component={Machine} />
