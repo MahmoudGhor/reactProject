@@ -49,11 +49,19 @@ const styles = theme => ({
 class CreerUtilisateur extends React.Component {
   state = {
     activeStep: 0,
-    email: '',
-    name:'',
-    lastname: '',
-    password: '',
-    password2:''
+    email: this.props.user.email,
+    name: this.props.user.name,
+    lastname: this.props.user.Last_Name,
+  };
+
+  handleClose = () => {
+    const infoUser = {
+      id:this.props.user._id,
+      email : this.state.email,
+      name : this.state.name ,
+      lastname : this.state.lastname
+    };
+    this.props.onClose(infoUser);
   };
 
   changeEmail = e => {
@@ -66,30 +74,6 @@ class CreerUtilisateur extends React.Component {
 
   changeName = e => {
     this.setState({name : e.target.value});
-  };
-
-  changeMotDePasse = e => {
-    this.setState({password : e.target.value});
-  };
-
-  repeatMotDePasse = e => {
-    this.setState({password2 : e.target.value});
-  }
-
-
-
-  handleClose = () => {
-    if (this.state.password === this.state.password2){
-      const user = {
-        name: this.state.name,
-        email: this.state.email,
-        lastname: this.state.lastname,
-        password: this.state.password,
-      }
-      this.props.onClose(user);
-    }else{
-      this.props.onClose(null);
-    }
   };
 
 
@@ -108,33 +92,25 @@ class CreerUtilisateur extends React.Component {
         <div >
           <img
             style={{ maxWidth: "60px" }}
-            src={window.location.origin + '/images/1004733.png'}
+            src={window.location.origin + '/images/UpdateUser.png'}
             alt="Shards Dashboard"
           />
         </div>
         <Typography component="h1" variant="h5">
-        Ajouter un utilisateur
+        Modifier un utilisateur
         </Typography>
         <div className={classes.form}>
         <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="name">Prenom</InputLabel>
-            <Input id="name" name="name"  onChange={this.changeName.bind(this)}  autoComplete="Nom" autoFocus />
+            <Input id="name" name="name" autoComplete="Nom" onChange={this.changeName.bind(this)}  defaultValue={this.props.user.name} />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="last Name">Nom</InputLabel>
-            <Input id="Last Name" name="Last Name"  onChange={this.changeLastName.bind(this)} autoComplete="Last Name"  />
+            <Input id="Last Name" name="Last Name" onChange={this.changeLastName.bind(this)} autoComplete="Last Name"  defaultValue={this.props.user.Last_Name} />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="email">Addresse Email</InputLabel>
-            <Input id="email" name="email" onChange={this.changeEmail.bind(this)}  autoComplete="email"  />
-          </FormControl>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="password">mot de passe</InputLabel>
-            <Input name="password" type="password" onChange={this.changeMotDePasse.bind(this)} id="password" autoComplete="current-password" />
-          </FormControl>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="password"> confirmer le mot de passe</InputLabel>
-            <Input name="password" type="password"   onChange={this.repeatMotDePasse.bind(this)}id="password" autoComplete="current-password" />
+            <InputLabel htmlFor="email">Addresse Email </InputLabel>
+            <Input id="email" name="email" onChange={this.changeEmail.bind(this)} defaultValue={this.props.user.email} autoComplete="email"  />
           </FormControl>
           <Button
             type="submit"
@@ -142,9 +118,8 @@ class CreerUtilisateur extends React.Component {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={this.handleClose.bind(this)}
-          >
-            Ajouter utilisateur
+         onClick={this.handleClose.bind(this)} >
+            Modifier utilisateur
           </Button>
         </div>
       </Paper>

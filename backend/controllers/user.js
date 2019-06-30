@@ -14,10 +14,13 @@ exports.createUser = (req, res, next) => {
   user
     .save()
     .then(result => {
-      console.log("ok");
-      res.status(201).json({
-        message: "User created!",
-        result: result
+      User.find({}, function (err, users) {
+        if (err) {
+          return res.json(err);
+        } else {
+          return res.json({status: "success", message: "clients list found!!!", data: {users: users}});
+
+        }
       });
     })
 
@@ -111,3 +114,21 @@ exports.deleteUser = (req, res, next) => {
     }
   });
 };
+
+
+exports.updateById = (req, res, next) => {
+  User.findByIdAndUpdate(req.params.id, {name: req.body.name , email : req.body.email , Last_Name : req.body.lastname}, {new: true}, function (err, clientInfo) {
+    if (err)
+      return res.json(err);
+    else {
+      User.find({}, function (err, users) {
+        if (err) {
+          return res.json(err);
+        } else {
+          return res.json({status: "success", message: "clients list found!!!", data: {users: users}});
+
+        }
+      });
+    }
+  });
+}

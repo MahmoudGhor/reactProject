@@ -7,7 +7,8 @@ router.post("/signup",userController.createUser);
 router.post("/signin",userController.authenticate);
 router.get("/profile", authCheck, userController.getProfileForConnectedUser);
 router.get("/", authCheck, userController.getAllUsers);
-router.delete("/:id", userController.deleteUser);
+router.delete("/:id", authCheck , userController.deleteUser);
+router.put('/:id', authCheck , userController.updateById);
 
 
 module.exports = router;

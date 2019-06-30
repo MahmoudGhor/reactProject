@@ -8,6 +8,7 @@ import ListeUtilisateurs from './listeUtilisateurs';
 import Tables from '../../views/Tables';
 import axios from "axios";
 import Spinner from "../common/Spinner";
+import UpdateUtilisateur from './UtilisateurForm/UpdateUtilisateur';
 
 
 const styles = theme => ({
@@ -28,8 +29,10 @@ class Utilisateur extends Component {
     this.state = {
       users: [],
       etat:false,
+
     }
   }
+
 
   componentDidMount() {
     axios({
@@ -58,7 +61,32 @@ class Utilisateur extends Component {
         users: res.data.data.users,
       })
     })
-  }
+  };
+
+  getUserUpdated = e => {
+    axios({
+      method: 'put',
+      url: 'http://localhost:3001/application/user/'+e.id,
+      data: e,
+    }).then((res) => {
+      this.setState({
+        users: res.data.data.users,
+      })
+    });
+  };
+
+  getNewUser = e => {
+    axios({
+      method: 'post',
+      url: 'http://localhost:3001/application/user/signup',
+      data: e,
+
+    }).then((res) => {
+      this.setState({
+        users: res.data.data.users,
+      })
+    })
+  };
   render() {
     if (this.state.users.length === 0 && this.state.etat === false ) {
       return <Spinner/>;
@@ -67,7 +95,7 @@ class Utilisateur extends Component {
     const {classes} = this.props;
     let inerfaceTableUsers= [];
     try {
-      inerfaceTableUsers = <Tables idUserFromDate={this.getIdUserToDelete.bind(this)} users={this.state.users}/>
+      inerfaceTableUsers = <Tables UserUpdated={this.getUserUpdated.bind(this)} idUserFromDate={this.getIdUserToDelete.bind(this)} users={this.state.users}/>
 
     } catch (err) {
       inerfaceTableUsers = "no users";
@@ -78,7 +106,7 @@ class Utilisateur extends Component {
           <div className={classes.root}>
             <Grid container spacing={24}>
               <Grid item xs={12}>
-                <Paper className={classes.paper}><CreerUtilisateur/></Paper>
+                <Paper className={classes.paper}><CreerUtilisateur NewUser={this.getNewUser.bind(this)}/></Paper>
               </Grid>
 
 

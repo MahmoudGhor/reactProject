@@ -15,13 +15,17 @@ class Tables extends Component {
 
   getValueFromTable = e => {
     this.props.idUserFromDate(e);
-  }
+  };
+
+  getValueForUpdate = e => {
+    this.props.UserUpdated(e);
+  };
   render() {
 
     let interfaceDetailsUsers = [];
     try {
       interfaceDetailsUsers = this.props.users.map(user => (
-        <TableDonnéeUtilisateur valueFromTable={this.getValueFromTable.bind(this)} key={user._id} user={user}/>
+        <TableDonnéeUtilisateur valueForUpdate={this.getValueForUpdate.bind(this)} valueFromTable={this.getValueFromTable.bind(this)} key={user._id} user={user}/>
       ));
 
     } catch (err) {

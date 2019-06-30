@@ -95,19 +95,11 @@ class Checkout extends React.Component {
           <main className={classes.layout}>
             <Paper className={classes.paper}>
 
-              <React.Fragment>
-
-                <React.Fragment>
-
-                </React.Fragment>
-
                 <React.Fragment>
                   {this.getStepContent(activeStep)}
 
                 </React.Fragment>
 
-
-              </React.Fragment>
             </Paper>
           </main>
         </React.Fragment>

@@ -31,7 +31,10 @@ class ContainedButtons extends Component {
   };
 
   handleClose = value => {
-    this.setState({ selectedValue: value, open: false });
+    this.setState({ open: false });
+    if (value !== null) {
+      this.props.NewUser(value);
+    }
   };
 
   render() {
