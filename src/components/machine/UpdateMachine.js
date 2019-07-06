@@ -50,18 +50,20 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 3,
   },
 });
+
 class UpdateMachine extends React.Component {
   state = {
     activeStep: 0,
     fonctionne: false,
     name: this.props.machine.name,
     reference: this.props.machine.reference,
-    prix_par_hr:this.props.machine.prix_par_hr,
-    nombre_hr_travail :this.props.machine.nombre_hr_travail,
+    prix_par_hr: this.props.machine.prix_par_hr,
+    nombre_hr_travail: this.props.machine.nombre_hr_travail,
     etat: this.props.machine.etat,
 
-      errors: {}
+    errors: {}
   };
+
   changereference(e) {
     this.setState({reference: e.target.value});
   }
@@ -69,23 +71,27 @@ class UpdateMachine extends React.Component {
   changename(e) {
     this.setState({name: e.target.value});
   }
+
   changeprix_par_Heur(e) {
     this.setState({prix_par_hr: e.target.value});
   }
+
   changenombre_hr_travail(e) {
     this.setState({nombre_hr_travail: e.target.value});
   }
+
   changeetat() {
     this.setState(state => ({etat: !state.etat}));
   }
+
   handleClose = () => {
     const machineData = {
-      id:this.props.machine._id,
+      id: this.props.machine._id,
       name: this.state.name,
-      reference : this.state.reference,
+      reference: this.state.reference,
       prix_par_hr: this.state.prix_par_hr,
       nombre_hr_travail: this.state.nombre_hr_travail,
-      etat : this.state.etat
+      etat: this.state.etat
     };
     this.props.onClose(machineData)
   };
@@ -93,72 +99,79 @@ class UpdateMachine extends React.Component {
   handleCloseWithoutNothing = () => {
     this.props.onClose(null);
   }
-  handlecheckboxchange =() =>{
+  handlecheckboxchange = () => {
     this.setState(state => ({fonctionne: !state.fonctionne}))
 
   };
 
 
   render() {
-    const { activeStep } = this.state;
-    const { classes, onClose, selectedValue, ...other } = this.props;
+    const {activeStep} = this.state;
+    const {classes, onClose, selectedValue, ...other} = this.props;
 
 
+    return (
+      <Dialog onClose={this.handleCloseWithoutNothing} aria-labelledby="simple-dialog-title" {...other}>
 
+        <main className={classes.main}>
+          <CssBaseline/>
+          <Paper className={classes.paper}>
+            <div>
+              <img
+                style={{maxWidth: "60px"}}
+                src={window.location.origin + '/images/UpdateUser.png'}
+                alt="Shards Dashboard"
+              />
+            </div>
+            <Typography component="h1" variant="h5">
+              nouveua machine
+            </Typography>
+            <div className={classes.form}>
 
+              <FormControl margin="normal" required fullWidth>
+                <InputLabel htmlFor=" Name">Nom</InputLabel>
+                <Input id="Name" name=" Name" onChange={this.changename.bind(this)}
+                       defaultValue={this.props.machine.name} autoComplete="Name" autoFocus/>
+              </FormControl>
+              <FormControl margin="normal" required fullWidth>
+                <InputLabel htmlFor=" Name">reference</InputLabel>
+                <Input id="Reference" onChange={this.changereference.bind(this)} name=" Name"
+                       defaultValue={this.props.machine.reference} autoComplete="Name"/>
+              </FormControl>
+              <FormControl margin="normal" required fullWidth>
+                <InputLabel htmlFor="prix_par_Heur">prix par Heur</InputLabel>
+                <Input id="prix_par_Heur" onChange={this.changeprix_par_Heur.bind(this)}
+                       defaultValue={this.props.machine.prix_par_hr} name="prix_par_Heur" autoComplete="prix_par_Heur"/>
+              </FormControl>
+              <FormControl margin="normal" required fullWidth>
+                <InputLabel htmlFor="nombre_hr_travail">nombre d'heur de travail </InputLabel>
+                <Input name="nombre_hr_travail" onChange={this.changenombre_hr_travail.bind(this)}
+                       defaultValue={this.props.machine.nombre_hr_travail} type="nombre_hr_travail"
+                       id="nombre_hr_travail" autoComplete="current-nombre_hr_travail"/>
+              </FormControl>
+              <FormControlLabel
+                control={<Checkbox onChange={this.changeetat.bind(this)} color="primary"/>}
+                label={this.state.etat ? "fonctionnelle" : "en panne"}
+              />
 
-  return (
-    <Dialog onClose={this.handleCloseWithoutNothing} aria-labelledby="simple-dialog-title" {...other}>
-
-    <main className={classes.main}>
-      <CssBaseline />
-      <Paper className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-         nouveua machine
-        </Typography>
-        <div className={classes.form}>
-
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor=" Name">Nom</InputLabel>
-            <Input id="Name" name=" Name" onChange={this.changename.bind(this)}   defaultValue={this.props.machine.name} autoComplete="Name" autoFocus />
-          </FormControl>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor=" Name">reference</InputLabel>
-            <Input id="Reference"  onChange={this.changereference.bind(this)} name=" Name"  defaultValue={this.props.machine.reference} autoComplete="Name"  />
-          </FormControl>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="prix_par_Heur">prix par Heur</InputLabel>
-            <Input id="prix_par_Heur"  onChange={this.changeprix_par_Heur.bind(this)}   defaultValue={this.props.machine.prix_par_hr} name="prix_par_Heur" autoComplete="prix_par_Heur"  />
-          </FormControl>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="nombre_hr_travail">nombre d'heur de travail </InputLabel>
-            <Input name="nombre_hr_travail"  onChange={this.changenombre_hr_travail.bind(this)}  defaultValue={this.props.machine.nombre_hr_travail} type="nombre_hr_travail" id="nombre_hr_travail" autoComplete="current-nombre_hr_travail" />
-          </FormControl>
-          <FormControlLabel
-            control={<Checkbox  onChange={this.changeetat.bind(this)}   color="primary" />}
-            label={this.state.etat? "fonctionnelle" : "en panne"}
-          />
-
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            onClick={this.handleClose.bind(this)}
-          >
-            ajouter une Machine
-          </Button>
-        </div>
-      </Paper>
-    </main>
-    </Dialog>
-  );
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                onClick={this.handleClose.bind(this)}
+              >
+                ajouter une Machine
+              </Button>
+            </div>
+          </Paper>
+        </main>
+      </Dialog>
+    );
+  }
 }
-}
+
 const mapStateToProps = state => ({
   auth: state.auth,
   errors: state.errors
@@ -168,5 +181,5 @@ export default compose(
   (withStyles(styles)),
   connect(
     mapStateToProps,
-    )
+  )
 )(UpdateMachine);

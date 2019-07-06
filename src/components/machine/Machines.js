@@ -46,6 +46,7 @@ class Machines extends Component {
   }
 
   getNewMachine = e => {
+    if (e !== null){
     axios({
       method: 'post',
       url: 'http://localhost:3001/application/machine',
@@ -56,6 +57,7 @@ class Machines extends Component {
         machine: res.data.data.machines,
       })
     })
+    }
   };
   updateMachine = e => {
     if (e !== null){
