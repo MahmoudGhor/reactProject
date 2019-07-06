@@ -50,15 +50,15 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 3,
   },
 });
-class CreerMachine extends React.Component {
+class UpdateMachine extends React.Component {
   state = {
     activeStep: 0,
     fonctionne: false,
-    name: "",
-    reference: "",
-    prix_par_hr:"",
-    nombre_hr_travail :"",
-    etat: true,
+    name: this.props.machine.name,
+    reference: this.props.machine.reference,
+    prix_par_hr:this.props.machine.prix_par_hr,
+    nombre_hr_travail :this.props.machine.nombre_hr_travail,
+    etat: this.props.machine.etat,
 
       errors: {}
   };
@@ -78,13 +78,9 @@ class CreerMachine extends React.Component {
   changeetat() {
     this.setState(state => ({etat: !state.etat}));
   }
-  clicked (e){
-
-
-    }
-
   handleClose = () => {
     const machineData = {
+      id:this.props.machine._id,
       name: this.state.name,
       reference : this.state.reference,
       prix_par_hr: this.state.prix_par_hr,
@@ -93,6 +89,10 @@ class CreerMachine extends React.Component {
     };
     this.props.onClose(machineData)
   };
+
+  handleCloseWithoutNothing = () => {
+    this.props.onClose(null);
+  }
   handlecheckboxchange =() =>{
     this.setState(state => ({fonctionne: !state.fonctionne}))
 
@@ -100,7 +100,6 @@ class CreerMachine extends React.Component {
 
 
   render() {
-
     const { activeStep } = this.state;
     const { classes, onClose, selectedValue, ...other } = this.props;
 
@@ -109,7 +108,7 @@ class CreerMachine extends React.Component {
 
 
   return (
-    <Dialog onClose={this.handleClose} aria-labelledby="simple-dialog-title" {...other}>
+    <Dialog onClose={this.handleCloseWithoutNothing} aria-labelledby="simple-dialog-title" {...other}>
 
     <main className={classes.main}>
       <CssBaseline />
@@ -124,22 +123,22 @@ class CreerMachine extends React.Component {
 
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor=" Name">Nom</InputLabel>
-            <Input id="Name" name=" Name" onChange={this.changename.bind(this)} autoComplete="Name" autoFocus />
+            <Input id="Name" name=" Name" onChange={this.changename.bind(this)}   defaultValue={this.props.machine.name} autoComplete="Name" autoFocus />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor=" Name">reference</InputLabel>
-            <Input id="Reference"  onChange={this.changereference.bind(this)} name=" Name" autoComplete="Name"  />
+            <Input id="Reference"  onChange={this.changereference.bind(this)} name=" Name"  defaultValue={this.props.machine.reference} autoComplete="Name"  />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="prix_par_Heur">prix par Heur</InputLabel>
-            <Input id="prix_par_Heur"  onChange={this.changeprix_par_Heur.bind(this)} name="prix_par_Heur" autoComplete="prix_par_Heur"  />
+            <Input id="prix_par_Heur"  onChange={this.changeprix_par_Heur.bind(this)}   defaultValue={this.props.machine.prix_par_hr} name="prix_par_Heur" autoComplete="prix_par_Heur"  />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="nombre_hr_travail">nombre d'heur de travail </InputLabel>
-            <Input name="nombre_hr_travail"  onChange={this.changenombre_hr_travail.bind(this)} type="nombre_hr_travail" id="nombre_hr_travail" autoComplete="current-nombre_hr_travail" />
+            <Input name="nombre_hr_travail"  onChange={this.changenombre_hr_travail.bind(this)}  defaultValue={this.props.machine.nombre_hr_travail} type="nombre_hr_travail" id="nombre_hr_travail" autoComplete="current-nombre_hr_travail" />
           </FormControl>
           <FormControlLabel
-            control={<Checkbox  onChange={this.changeetat.bind(this)} color="primary" />}
+            control={<Checkbox  onChange={this.changeetat.bind(this)}   color="primary" />}
             label={this.state.etat? "fonctionnelle" : "en panne"}
           />
 
@@ -170,4 +169,4 @@ export default compose(
   connect(
     mapStateToProps,
     )
-)(CreerMachine);
+)(UpdateMachine);

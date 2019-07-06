@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import {Container, Row, Col, Card, CardHeader, CardBody} from "shards-react";
 import swal from 'sweetalert';
+import TableDonneeMachine from './TablesDonneeMachine';
 
 
 import PageTitle from "../common/PageTitle";
 import IconButton from '@material-ui/core/IconButton';
 import toRenderProps from 'recompose/toRenderProps';
 import withState from 'recompose/withState';
+import TableDonnéeUtilisateur from "../utilisateur/tableDonnéeUtilisateur";
 
 const WithState = toRenderProps(withState('anchorEl', 'updateAnchorEl', null));
 
@@ -30,8 +32,24 @@ class Tables extends Component {
         }
       });
   };
+  getValueForUpdateMachine = e => {
+    this.props.idMachineToUpdate(e);
+  };
+  getValueForDelete =e => {
+    this.props.valueForDelete(e);
+  }
 
   render() {
+
+    let interfaceDetailsMachine = [];
+    try {
+      interfaceDetailsMachine = this.props.machine.map(machine => (
+        <TableDonneeMachine valueFromTable={this.getValueForDelete.bind(this)} valueForUpdate={this.getValueForUpdateMachine.bind(this)} machine={machine}/>
+      ));
+
+    } catch (err) {
+      interfaceDetailsMachine = "no machines";
+    }
 
     return (
       <div>
@@ -64,19 +82,19 @@ class Tables extends Component {
                             <thead className="bg-light">
                             <tr>
                               <th scope="col" className="border-0">
-                                Nom du Machine
+                                <center> Nom du Machine </center>
                               </th>
                               <th scope="col" className="border-0">
-                                Reference
+                                <center> Reference </center>
                               </th>
                               <th scope="col" className="border-0">
-                                Prix par heure
+                                <center> Prix par heure </center>
                               </th>
                               <th scope="col" className="border-0">
-                                Nombre d'heures totals
+                                <center> Nombre d'heures totals </center>
                               </th>
                               <th scope="col" className="border-0">
-                                Etat
+                                <center> Etat </center>
                               </th>
                               <th scope="col" className="border-0">
                                 Supprimer
@@ -87,22 +105,8 @@ class Tables extends Component {
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                              <td>Russian Federation</td>
-                              <td>Gdańsk</td>
-                              <td>107-0339</td>
-                              <td>107-0339</td>
-                              <td>107-0339</td>
-                              <td><IconButton onClick={this.clicked.bind(this)}>
-                                <img style={{width: '30px', height: '30px', borderRadius: '10px'}}
-                                     src={window.location.origin + '/images/poubelle.png'}/>
-                              </IconButton></td>
-                              <td><IconButton>
-                                <img style={{width: '30px', height: '30px', borderRadius: '10px'}}
-                                     src={window.location.origin + '/images/update.png'}/>
-                              </IconButton></td>
+                            {interfaceDetailsMachine}
 
-                            </tr>
                             </tbody>
                           </table>
                         </CardBody>
