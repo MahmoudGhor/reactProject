@@ -64,6 +64,7 @@ class Utilisateur extends Component {
   };
 
   getUserUpdated = e => {
+    if (e !== null){
     axios({
       method: 'put',
       url: 'http://localhost:3001/application/user/'+e.id,
@@ -73,6 +74,7 @@ class Utilisateur extends Component {
         users: res.data.data.users,
       })
     });
+    }
   };
 
   getNewUser = e => {

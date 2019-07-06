@@ -64,6 +64,10 @@ class CreerUtilisateur extends React.Component {
     this.props.onClose(infoUser);
   };
 
+  handleCloseWithoutNothing = () => {
+    this.props.onClose(null);
+  }
+
   changeEmail = e => {
     this.setState({email : e.target.value});
   };
@@ -84,7 +88,7 @@ class CreerUtilisateur extends React.Component {
 
 
   return (
-    <Dialog onClose={this.handleClose} aria-labelledby="simple-dialog-title" {...other}>
+    <Dialog onClose={this.handleCloseWithoutNothing} aria-labelledby="simple-dialog-title" {...other}>
 
     <main className={classes.main}>
       <CssBaseline />
