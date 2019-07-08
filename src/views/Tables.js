@@ -14,7 +14,7 @@ const WithState = toRenderProps(withState('anchorEl', 'updateAnchorEl', null));
 class Tables extends Component {
 
   getValueFromTable = e => {
-    this.props.idUserFromDate(e);
+    this.props.idUserFromDelete(e);
   };
 
   getValueForUpdate = e => {

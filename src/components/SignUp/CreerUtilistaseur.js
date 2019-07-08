@@ -88,7 +88,7 @@ class SignUp extends  Component {
       }
         this.props.registerUser(userdata);
     }else{
-      console.log('no');
+
     }
   }
 

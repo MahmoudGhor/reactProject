@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const stockController = require('../app/api/controllers/stocks');
+const stockController = require('../controllers/stocks');
 router.get('/', stockController.getAll);
 router.post('/', stockController.create);
 router.get('/:stockId', stockController.getById);

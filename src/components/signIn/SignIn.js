@@ -90,7 +90,6 @@ class SignIn extends Component {
       email,
       password: pwd
     };
-    console.log(this.state.errors);
     this.props.loginUser(auth);
   }
 

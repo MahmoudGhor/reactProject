@@ -29,7 +29,8 @@ class ContainedButtons extends Component {
   };
 
   handleClose = value => {
-    this.setState({ selectedValue: value, open: false });
+    this.setState({ open: false });
+    this.props.NewStock(value)
   };
 
   render() {

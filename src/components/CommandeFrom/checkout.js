@@ -52,14 +52,14 @@ const styles = theme => ({
   },
 });
 
-const steps = ['Shipping address',  'Review your order'];
+const steps = ['Selectionnez le client',  'à propos loffre de prix'];
 
 function getStepContent(step) {
   switch (step) {
     case 0:
       return <AddressForm />;
     case 1:
-     
+
       return <Review />;
     default:
       throw new Error('Unknown step');

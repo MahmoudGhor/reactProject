@@ -40,16 +40,12 @@ class Utilisateur extends Component {
       url: 'http://localhost:3001/application/user/'
 
     }).then((res) => {
-      console.log(res.data.data.users);
       this.setState({
         etat:true,
         users: res.data.data.users,
       })
     })
-
-
-
-  };
+};
 
   getIdUserToDelete = e => {
     axios({
@@ -97,7 +93,7 @@ class Utilisateur extends Component {
     const {classes} = this.props;
     let inerfaceTableUsers= [];
     try {
-      inerfaceTableUsers = <Tables UserUpdated={this.getUserUpdated.bind(this)} idUserFromDate={this.getIdUserToDelete.bind(this)} users={this.state.users}/>
+      inerfaceTableUsers = <Tables UserUpdated={this.getUserUpdated.bind(this)} idUserFromDelete={this.getIdUserToDelete.bind(this)} users={this.state.users}/>
 
     } catch (err) {
       inerfaceTableUsers = "no users";

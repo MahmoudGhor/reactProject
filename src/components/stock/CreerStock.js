@@ -55,21 +55,39 @@ class CreerStock extends React.Component {
     super(props);
     this.state = {
     activeStep: 0,
-    disponibilté: false,
     nomP: "",
-    quantité: "",
+    quantité: 0,
     prix_par_kg :"",
-    etat:"",
-     
+    etat:false,
+
       errors: {}
   };
 }
 
   handleClose = () => {
-    this.props.onClose(this.props.selectedValue);
+
+    if (this.state.quantité > 0){
+      this.setState({etat: true});
+    }else{
+      this.setState({etat: false});
+    }
+    const userdata = {
+      nomP : this.state.nomP,
+      prix_par_kg : this.state.prix_par_kg,
+      quantité : this.state.quantité,
+      etat : this.state.etat,
+    };
+
+    this.setState({etat: false});
+    this.setState({nomP: ""});
+    this.setState({quantité: 0});
+    this.setState({prix_par_kg: ""});
+    this.props.onClose(userdata);
+
   };
-  handlecheckboxchange =() =>{
-    this.setState(state => ({disponibilté: !state.disponibilté}))
+
+  handleCloseWithoutAnything = () => {
+    this.props.onClose(null);
   }
   changenomP(e) {
     this.setState({nomP: e.target.value});
@@ -77,38 +95,26 @@ class CreerStock extends React.Component {
 
   changequantité(e) {
     this.setState({quantité: e.target.value});
+    if (e.target.value > 0){
+      this.setState({etat: true});
+    }
   }
   changeprix_par_kg(e) {
     this.setState({prix_par_kg: e.target.value});
   }
-  changeetat() {
-    this.setState(state => ({etat: !state.etat}));
-    console.log(this.state.etat)
-  }
-  
 
-  clicked (e){
-  
-    const userdata = {
-        nomP : this.state.nomP,
-        quantité : this.state.quantité,
-        prix_par_kg : this.state.prix_par_kg,
-        etat : this.state.etat,
-       
-      }
-        console.log(userdata);
-    }
+
 
 
 
   render() {
 
     const { classes, onClose, selectedValue, ...other } = this.props;
-    
+
 
 
   return (
-    <Dialog onClose={this.handleClose} aria-labelledby="simple-dialog-title" {...other}>
+    <Dialog onClose={this.handleCloseWithoutAnything} aria-labelledby="simple-dialog-title" {...other}>
 
     <main className={classes.main}>
       <CssBaseline />
@@ -133,26 +139,23 @@ class CreerStock extends React.Component {
 
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor=" quantité">quantité</InputLabel>
-            <Input id=" quantité"   onChange={this.changeprix_par_kg.bind(this)}name=" quantité" autoComplete=" quantité" autoFocus />
+            <Input id="quantité"   onChange={this.changequantité.bind(this)}name=" quantité" autoComplete=" quantité"  />
           </FormControl>
 
 
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="prix_par_kg">prix par kg</InputLabel>
-            <Input id="prix_par_kg" onChange={this.changeprix_par_kg.bind(this)} name="prix_par_kg" autoComplete="prix_par_kg" autoFocus />
+            <Input id="prix_par_kg" onChange={this.changeprix_par_kg.bind(this)} name="prix_par_kg" autoComplete="prix_par_kg"  />
           </FormControl>
-          
-          <FormControlLabel
-            control={<Checkbox  onChange={this.changeetat.bind(this)} color="primary" />}
-            label={this.state.etat? "fonctionnelle" : "en panne"}
-          />
+
+
           <Button
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={this.clicked.bind(this)}
+            onClick={this.handleClose.bind(this)}
           >
             ajouter un produit
           </Button>

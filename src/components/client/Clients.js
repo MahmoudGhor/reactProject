@@ -38,7 +38,6 @@ class Clients extends Component {
       url: 'http://localhost:3001/application/clients/'
 
     }).then((res) => {
-      console.log(res.data.data.clients);
       this.setState({
         etat:true,
         clients: res.data.data.clients,
@@ -61,7 +60,6 @@ class Clients extends Component {
         url: 'http://localhost:3001/application/clients/'
 
       }).then((res) => {
-        console.log(res.data.data.clients);
         this.setState({
           clients : [],
           etat: false

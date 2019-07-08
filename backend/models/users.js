@@ -27,7 +27,7 @@ const UserSchema = new Schema({
     },
     permissionLevel: {
         type: Number,
-        default: 1
+        default: 2
     }
 });
 

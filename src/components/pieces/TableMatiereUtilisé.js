@@ -1,6 +1,5 @@
 import React from "react";
-import { Container, Row, Col, Card, CardHeader, CardBody } from "shards-react";
-
+import {Container, Row, Col, Card, CardHeader, CardBody, FormSelect, FormInput, FormGroup} from "shards-react";
 import PageTitle from "../common/PageTitle";
 import IconButton from '@material-ui/core/IconButton';
 import toRenderProps from 'recompose/toRenderProps';
@@ -48,16 +47,21 @@ function TableMatiereUtilis () {
               </thead>
               <tbody>
               <tr>
-                <td><select>
-                  <option> aaa</option>
-                  <option> aaa</option>
-                  <option> aaa</option>
-                  <option> aaa</option>
-                  <option> aaa</option>
-                  <option> aaa</option>
-                </select></td>
-                <td>Ali</td>
-                <td>Kerry</td>
+                <td>
+                <Col md="5" className="form-group">
+                  <FormSelect>
+                    <option>Choose ...</option>
+                    <option>...</option>
+                  </FormSelect>
+                </Col>
+              </td>
+                <td>  </td>
+                <td>
+                  <FormInput
+                    placeholder="Choissiez le poids"
+                    onChange={() => {}}
+                  />
+                </td>
               </tr>
               <tr>
                 <td></td>

@@ -79,7 +79,6 @@ class Checkout extends React.Component {
   };
 
   getClientFromAddClient = e => {
-    console.log('dkhal l checkout');
     this.props.valueclient(e);
   }
 
