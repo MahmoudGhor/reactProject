@@ -93,6 +93,7 @@ class UpdateMachine extends React.Component {
       nombre_hr_travail: this.state.nombre_hr_travail,
       etat: this.state.etat
     };
+    
     this.props.onClose(machineData)
   };
 
@@ -127,28 +128,25 @@ class UpdateMachine extends React.Component {
               nouveua machine
             </Typography>
             <div className={classes.form}>
-
-              <FormControl margin="normal" required fullWidth>
+            <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor=" Name">Nom</InputLabel>
-                <Input id="Name" name=" Name" onChange={this.changename.bind(this)}
-                       defaultValue={this.props.machine.name} autoComplete="Name" autoFocus/>
+                <Input id="Name" type="text" name=" Name" onChange={this.changename.bind(this)} autoComplete="Name" autoFocus/>
               </FormControl>
               <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor=" Name">reference</InputLabel>
-                <Input id="Reference" onChange={this.changereference.bind(this)} name=" Name"
-                       defaultValue={this.props.machine.reference} autoComplete="Name"/>
+                <Input type='number' id="Reference" onChange={this.changereference.bind(this)} name=" Name" autoComplete="Name"/>
               </FormControl>
               <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="prix_par_Heur">prix par Heur</InputLabel>
-                <Input id="prix_par_Heur" onChange={this.changeprix_par_Heur.bind(this)}
-                       defaultValue={this.props.machine.prix_par_hr} name="prix_par_Heur" autoComplete="prix_par_Heur"/>
+                <Input type='number' id="prix_par_Heur" onChange={this.changeprix_par_Heur.bind(this)} name="prix_par_Heur"
+                       autoComplete="prix_par_Heur"/>
               </FormControl>
               <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="nombre_hr_travail">nombre d'heur de travail </InputLabel>
                 <Input name="nombre_hr_travail" onChange={this.changenombre_hr_travail.bind(this)}
-                       defaultValue={this.props.machine.nombre_hr_travail} type="nombre_hr_travail"
-                       id="nombre_hr_travail" autoComplete="current-nombre_hr_travail"/>
+                       type="number" id="nombre_hr_travail" autoComplete="current-nombre_hr_travail"/>
               </FormControl>
+         
               <FormControlLabel
                 control={<Checkbox onChange={this.changeetat.bind(this)} color="primary"/>}
                 label={this.state.etat ? "fonctionnelle" : "en panne"}

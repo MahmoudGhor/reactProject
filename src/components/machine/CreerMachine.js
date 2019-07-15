@@ -1,4 +1,4 @@
-import React from 'react';
+ import React from 'react';
 import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -15,6 +15,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import {Redirect} from "react-router-dom";
 import {connect} from "react-redux";
 import {compose} from "recompose";
+import swal from 'sweetalert';
 
 
 import Dialog from '@material-ui/core/Dialog';
@@ -58,7 +59,7 @@ class CreerMachine extends React.Component {
     name: "",
     reference: "",
     prix_par_hr: "",
-    nombre_hr_travail: "",
+    nombre_hr_travail: 0,
     etat: true,
 
     errors: {}
@@ -97,6 +98,21 @@ class CreerMachine extends React.Component {
       nombre_hr_travail: this.state.nombre_hr_travail,
       etat: this.state.etat
     };
+    if (machineData.name.trim() ==''){
+      swal("nom machine vide!", {
+        icon: "warning",
+      });
+      
+    }else if(machineData.reference.trim() ==''){
+      swal("reference machine vide!", {
+        icon: "warning",
+      });
+    }else if (machineData.prix_par_hr.trim()==''){
+      swal("nombre de prix machine vide!", {
+        icon: "warning",
+      });
+
+    }else
     this.props.onClose(machineData)
   };
   handlecheckboxchange = () => {
@@ -132,27 +148,26 @@ class CreerMachine extends React.Component {
 
               <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor=" Name">Nom</InputLabel>
-                <Input id="Name" name=" Name" onChange={this.changename.bind(this)} autoComplete="Name" autoFocus/>
+                <Input id="Name" type="text" name=" Name" onChange={this.changename.bind(this)} autoComplete="Name" autoFocus/>
               </FormControl>
               <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor=" Name">reference</InputLabel>
-                <Input id="Reference" onChange={this.changereference.bind(this)} name=" Name" autoComplete="Name"/>
+                <Input type='number' id="Reference" onChange={this.changereference.bind(this)} name=" Name" autoComplete="Name"/>
               </FormControl>
               <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="prix_par_Heur">prix par Heur</InputLabel>
-                <Input id="prix_par_Heur" onChange={this.changeprix_par_Heur.bind(this)} name="prix_par_Heur"
+                <Input type='number' id="prix_par_Heur" onChange={this.changeprix_par_Heur.bind(this)} name="prix_par_Heur"
                        autoComplete="prix_par_Heur"/>
               </FormControl>
               <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="nombre_hr_travail">nombre d'heur de travail </InputLabel>
                 <Input name="nombre_hr_travail" onChange={this.changenombre_hr_travail.bind(this)}
-                       type="nombre_hr_travail" id="nombre_hr_travail" autoComplete="current-nombre_hr_travail"/>
+                       type="number" id="nombre_hr_travail" autoComplete="current-nombre_hr_travail"/>
               </FormControl>
               <FormControlLabel
                 control={<Checkbox onChange={this.changeetat.bind(this)} color="primary"/>}
                 label={this.state.etat ? "fonctionnelle" : "en panne"}
               />
-
               <Button
                 type="submit"
                 fullWidth
