@@ -15,6 +15,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import {Redirect} from "react-router-dom";
 import {connect} from "react-redux";
 import {compose} from "recompose";
+import swal from 'sweetalert';
 
 
 import Dialog from '@material-ui/core/Dialog';
@@ -77,12 +78,30 @@ class CreerStock extends React.Component {
       quantité : this.state.quantité,
       etat : this.state.etat,
     };
+    if (userdata.nomP.trim() ==''){
+      swal("nom produit vide!", {
+        icon: "warning",
+      });
+      
+    }else if(userdata.quantité.trim() ==''){
+      swal(" quantité vide!", {
+        icon: "warning",
+      });
+    }else if (userdata.prix_par_kg.trim()==''){
+      swal(" prix  vide!", {
+        icon: "warning",
+      });
+
+    }else
+
+
 
     this.setState({etat: false});
     this.setState({nomP: ""});
     this.setState({quantité: 0});
     this.setState({prix_par_kg: ""});
     this.props.onClose(userdata);
+
 
   };
 
@@ -133,19 +152,19 @@ class CreerStock extends React.Component {
 
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor=" Name">Nom</InputLabel>
-            <Input id=" Name"  onChange={this.changenomP.bind(this)} name=" Name" autoComplete=" Name" autoFocus />
+            <Input id=" Name"    onChange={this.changenomP.bind(this)} name=" Name" autoComplete=" Name" autoFocus />
           </FormControl>
 
 
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor=" quantité">quantité</InputLabel>
-            <Input id="quantité"   onChange={this.changequantité.bind(this)}name=" quantité" autoComplete=" quantité"  />
+            <Input id="quantité"  type='number' onChange={this.changequantité.bind(this)}name=" quantité" autoComplete=" quantité"  />
           </FormControl>
 
 
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="prix_par_kg">prix par kg</InputLabel>
-            <Input id="prix_par_kg" onChange={this.changeprix_par_kg.bind(this)} name="prix_par_kg" autoComplete="prix_par_kg"  />
+            <Input id="prix_par_kg" type='number' onChange={this.changeprix_par_kg.bind(this)} name="prix_par_kg" autoComplete="prix_par_kg"  />
           </FormControl>
 
 

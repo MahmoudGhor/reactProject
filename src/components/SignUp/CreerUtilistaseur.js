@@ -16,6 +16,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import {Redirect} from "react-router-dom";
 import {connect} from "react-redux";
 import {compose} from "recompose";
+import swal from 'sweetalert';
 
 const styles = theme => ({
   main: {
@@ -85,7 +86,29 @@ class SignUp extends  Component {
         password : this.state.pwd,
         name : this.state.name,
         lastname: this.state.lastname
-      }
+      };
+    
+      if (userdata.email.trim() ==''){
+          swal("adresse email vide!", {
+            icon: "warning",
+          });
+          
+        }else if (userdata.password.trim() ==''){
+          swal("mot de passe  vide!", {
+            icon: "warning",
+          });
+    
+        }else if (userdata.name.trim() ==''){
+          swal("nom  vide!", {
+            icon: "warning",
+          });
+        }else if (userdata.lastname.trim() ==''){
+            swal("prenom  vide!", {
+              icon: "warning",
+            });
+
+          }else
+
         this.props.registerUser(userdata);
     }else{
 

@@ -16,6 +16,8 @@ import {loginUser} from "../../store/actions/authActions";
 import {connect} from "react-redux";
 import {compose} from "recompose";
 import {Link, Redirect} from "react-router-dom";
+import swal from 'sweetalert';
+
 
 const styles = theme => ({
   main: {
@@ -90,6 +92,19 @@ class SignIn extends Component {
       email,
       password: pwd
     };
+    if (email.trim()==''){
+      swal("adresse email vide!", {
+        icon: "warning",
+      });
+      
+    }
+    else if (pwd.trim()==''){
+      swal("mot de passe  vide!", {
+        icon: "warning",
+      });
+
+    }else
+    
     this.props.loginUser(auth);
   }
 
