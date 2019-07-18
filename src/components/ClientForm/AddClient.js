@@ -16,6 +16,7 @@ import {Redirect} from "react-router-dom";
 import {connect} from "react-redux";
 import {compose} from "recompose";
 import axios from "axios";
+import swal from 'sweetalert';
 
 
 const styles = theme => ({
@@ -105,6 +106,38 @@ class AddClient extends Component {
       adresse: this.state.adresse,
       date_de_naissance: this.state.datenaissance
     };
+    if (userdata.name.trim() ==''){
+      swal("prenom client vide!", {
+        icon: "warning",
+      });
+      
+    }else if(userdata.lastname.trim() ==''){
+      swal("  nom client vide!", {
+        icon: "warning",
+      });
+    }else if(userdata.adresseEmail.trim() ==''){
+      swal("adresse email  vide!", {
+        icon: "warning",
+      });
+    }else if(userdata.numero_de_telephone.trim() ==''){
+      swal("numero de  telephone  machine vide!", {
+        icon: "warning",
+      });
+    }else if(userdata.fax.trim() ==''){
+      swal("fax client  vide!", {
+        icon: "warning",
+      });
+    }else if (userdata.adresse.trim()==''){
+      swal("adresse client vide!", {
+        icon: "warning",
+      });
+    }else if (userdata.date_de_naissance.trim()==''){
+      swal("date de naissance  vide!", {
+        icon: "warning",
+      });
+
+    }else
+   
     this.props.getClient(userdata);
 
   }
@@ -143,26 +176,26 @@ class AddClient extends Component {
             </FormControl>
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="adresse">Adresse </InputLabel>
-              <Input id="adresse" onChange={this.changeadresse.bind(this)} name="adresse" autoComplete="adresse" />
+              <Input  id="adresse" onChange={this.changeadresse.bind(this)} name="adresse" autoComplete="adresse" />
             </FormControl>
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="email">Email Address</InputLabel>
-              <Input id="email" onChange={this.changeEmailAddress.bind(this)} name="email" autoComplete="email"
+              <Input  id="email" type="email" onChange={this.changeEmailAddress.bind(this)} name="email" autoComplete="email"
                      />
             </FormControl>
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="date">Date de Naissance</InputLabel>
-              <Input id="dateDeNaissance" onChange={this.changdatenaissance.bind(this)} name="DateDeNaissance" autoComplete="Date Naissance"
+              <Input id="dateDeNaissance" type ='date' onChange={this.changdatenaissance.bind(this)} name="DateDeNaissance" autoComplete="Date Naissance"
                      />
             </FormControl>
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="numthlph">numero de téléphone</InputLabel>
-              <Input id="numthlph" onChange={this.changenumerotelephone.bind(this)} name="numthlph"
+              <Input id="numthlph" type ='number' onChange={this.changenumerotelephone.bind(this)} name="numthlph"
                      autoComplete="numthlph" />
             </FormControl>
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="fax">numéro de fax </InputLabel>
-              <Input id="fax" onChange={this.changefax.bind(this)} name="fax" autoComplete="fax" />
+              <Input id="fax"   type ='number' onChange={this.changefax.bind(this)} name="fax" autoComplete="fax" />
             </FormControl>
 
 

@@ -104,7 +104,7 @@ class Checkout extends React.Component {
           <main className={classes.layout}>
             <Paper className={classes.paper}>
               <Typography component="h1" variant="h4" align="center">
-                Checkout
+                offre de prix 
             </Typography>
               <Stepper activeStep={activeStep} className={classes.stepper}>
                 {steps.map(label => (
@@ -117,11 +117,10 @@ class Checkout extends React.Component {
                 {activeStep === steps.length ? (
                   <React.Fragment>
                     <Typography variant="h5" gutterBottom>
-                      Thank you for your order.
+                    félicitation  .
                   </Typography>
                     <Typography variant="subtitle1">
-                      Your order number is #2001539. We have emailed your order confirmation, and will
-                      send you an update when your order has shipped.
+                      l'offre a  été enregistrée avec succès
                   </Typography>
                   </React.Fragment>
                 ) : (
@@ -130,7 +129,7 @@ class Checkout extends React.Component {
                       <div className={classes.buttons}>
                         {activeStep !== 0 && (
                           <Button onClick={this.handleBack} className={classes.button}>
-                            Back
+                            retoure
                       </Button>
                         )}
                         <Button

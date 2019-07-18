@@ -62,12 +62,41 @@ class ReviewForm extends Component {
     return (
       <React.Fragment>
         <Typography variant="h6" gutterBottom>
+          Nom client 
+        </Typography>
+        
+        <TextField
+            id="name"
+            label="Nom"
+            //value={values.age}
+            //onChange={handleChange('age')}
+            type="string"
+            className={classes.textField}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            margin="normal"
+          />
+           <TextField
+            id="name"
+            label="Prenom"
+            //value={values.age}
+            //onChange={handleChange('age')}
+            type="string"
+            className={classes.textField}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            margin="normal"
+          />
+        
+        <Typography variant="h6" gutterBottom>
           Date de l'offre
         </Typography>
         <div className={classes.margin}>
           <TextField
-            id="date"
-            label="Date debut"
+            id="name"
+            label="Prenom"
             type="date"
             className={classes.textField}
             InputLabelProps={{
@@ -86,8 +115,27 @@ class ReviewForm extends Component {
         </div>
         <br/>
         <Typography variant="h6" gutterBottom>
-          Prix de l'offre
+         piece choisie
         </Typography>
+        
+        <TextField
+            id="name"
+            label="Nom piece"
+            //<Col md="10" className="form-group">
+          //<FormSelect onClick={this.changePiece.bind(this)}>
+         // <option>Choose ...</option>
+          //{this.props.listPiece.map((item) => <option value={item._id}>{item.name}</option>)}
+        //</FormSelect>
+      //</Col>
+            //value={values.age}
+            //onChange={handleChange('age')}
+            type="string"
+            className={classes.textField}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            margin="normal"
+          />
         <div className={classes.margin}>
           <TextField
             id="standard-number"
@@ -140,6 +188,74 @@ class ReviewForm extends Component {
           <TextField
             id="standard-number"
             label="prix de peinture"
+            //value={values.age}
+            //onChange={handleChange('age')}
+            type="number"
+            className={classes.textField}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            margin="normal"
+          />
+          <Typography variant="h6" gutterBottom>
+         Autre 
+        </Typography>
+        <TextField
+            id="prix-totale"
+            label="prix-totale"
+            //value={values.age}
+            //onChange={handleChange('age')}
+            type="number"
+            className={classes.textField}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            margin="normal"
+          />
+           <TextField
+            id="prix-taxé"
+            label="prix taxé"
+            //value={values.age}
+            //onChange={handleChange('age')}
+            type="number"
+            className={classes.textField}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            margin="normal"
+          />
+           <TextField
+            id="droit-timbre"
+            label="droit de timbre"
+            //value={values.age}
+            //onChange={handleChange('age')}
+            type="number"
+            className={classes.textField}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            margin="normal"
+          />
+           <TextField
+            id="prix-marge"
+            label="marge de prix "
+            //value={values.age}
+            //onChange={handleChange('age')}
+            type="number"
+            className={classes.textField}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            margin="normal"
+          />
+          </div>
+          <Typography variant="h6" gutterBottom>
+          desicion 
+         </Typography>
+         <div>
+            <TextField
+            id="prix-offset"
+            label="prix totale offset"
             //value={values.age}
             //onChange={handleChange('age')}
             type="number"
