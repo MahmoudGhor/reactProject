@@ -10,6 +10,10 @@ const ordreProductionSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'stock',
   },
+  poids: {
+    type: String,
+    trim: true
+  },
   ordreMachine: [OrdreMachine],
   dateEntree: {
     type: String,

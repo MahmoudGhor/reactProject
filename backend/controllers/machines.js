@@ -23,6 +23,17 @@ exports.getAll = (req, res, next) => {
   });
 };
 
+exports.getAllFunctionMachine = (req, res, next) => {
+  machineModel.find({'etat':{$eq:true}}, function (err, machines) {
+    if (err) {
+      return res.json(err);
+    } else {
+      return res.json({status: "success", message: "machines list found!!!", data: {machines: machines}});
+
+    }
+  });
+};
+
 
 exports.updateById =(req, res, next) => {
   machineModel.findByIdAndUpdate(req.params.machineId, {name: req.body.name , reference: req.body.reference,

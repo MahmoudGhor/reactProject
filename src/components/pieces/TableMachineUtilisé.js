@@ -5,14 +5,15 @@ import PageTitle from "../common/PageTitle";
 import DonneeMachine from "./DonneeMachine";
 import axios from "axios";
 import Spinner from "../common/Spinner";
+import {SelectMachine} from '../buttons/index';
 
 class TableMachineUtilisé extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      machines: [],
       machine: [],
-      prixTotal: 0
+      listeMachineUtilise: [],
+      fullPrice: 0
     }
   }
 
@@ -29,49 +30,48 @@ class TableMachineUtilisé extends Component {
     })
   }
 
-  getPrixMachine = e => {
-    let prixTot = this.state.prixTotal;
-    prixTot =  e;
-    this.setState({prixTotal: prixTot});
-  };
-
-  getRemovedMachine = e => {
-    let mach = this.state.machines;
-    let mach2 = mach.splice(e, 1);
-    this.setState({
-      machines: mach2
-    });
-  };
 
   getSelectedMachine = e => {
-    let mach = this.state.machines;
-    mach[this.state.machines.length - 1].id = e._id;
+    if (e !== null) {
+      var mymachines = this.state.listeMachineUtilise;
+      mymachines.push(e);
+      this.setState({listeMachineUtilise: mymachines});
+      var prix = this.state.fullPrice;
+      prix = (e.nbHeure * e.prix_par_hr);
+      var prixtotal = this.state.fullPrice + prix;
+      this.setState({fullPrice: prixtotal});
+      this.props.getAllMachine({
+        id_machine: e._id,
+        nb_heures: e.nbHeure
+      });
+      this.props.getPrixAllMachine(prixtotal);
+    }
   };
-
-  getValueToReduce = e => {
-    let prixTot = this.state.prixTotal;
-    prixTot = prixTot- e;
-    this.setState({prixTotal: prixTot});
-  }
+  deletedMachine = e => {
+    for (let i = 0; i < this.state.listeMachineUtilise.length; i++) {
+      if (this.state.listeMachineUtilise[i]._id === e) {
+        var prixToReduce = this.state.listeMachineUtilise[i].nbHeure * this.state.listeMachineUtilise[i].prix_par_hr;
+        var prixTot = this.state.fullPrice - prixToReduce;
+        var mymachines = this.state.listeMachineUtilise;
+        console.log(i);
+        var list = mymachines.splice(i, 1);
+        this.setState({fullPrice: prixTot});
+        this.setState({listeMachineUtilise: list});
+      }
+    }
+  };
 
 
   render() {
     let interfaceDonneeMachine = [];
-    const {machines, machine} = this.state;
-    interfaceDonneeMachine = machines.map(machines => (
-      <DonneeMachine valueToReduceFromPrice={this.getValueToReduce.bind(this)} key={machines.id} getSelectedMachine={this.getSelectedMachine.bind(this)}
-                     removedMachine={this.getRemovedMachine.bind(this)} machine={machines}
-                     listMachine={machine} prixMachine={this.getPrixMachine.bind(this)}/>
-    ));
-    const addRow = e => {
-      const machine = {
-        id: '',
-        nb_heures: ''
-      };
-      var newmachines = this.state.machines;
-      newmachines.push(machine);
-      this.setState({machines: newmachines});
-    };
+    const {machine} = this.state;
+    if (this.state.listeMachineUtilise.length > 0) {
+      interfaceDonneeMachine = this.state.listeMachineUtilise.map(machines => (
+        <DonneeMachine getToDeleteId={this.deletedMachine.bind(this)} key={machines._id} listMachine={machines}/>
+      ));
+    }
+
+
     if (this.state.machine.length === 0 && this.state.etat === false) {
       return <Spinner/>;
     }
@@ -87,13 +87,15 @@ class TableMachineUtilisé extends Component {
               <Card small className="mb-4">
                 <CardHeader className="border-bottom">
                   <h6 className="m-0">Machine</h6>
-                  <img onClick={addRow.bind(this)} style={{width: '30px', height: '30px', borderRadius: '10px'}}
-                       src={window.location.origin + '/images/1004733.png'}/>
+                  <SelectMachine getSelectedMachine={this.getSelectedMachine.bind(this)}/>
                 </CardHeader>
                 <CardBody className="p-0 pb-3">
                   <table className="table mb-0">
                     <thead className="bg-light">
                     <tr>
+                      <th scope="col" className="border-0">
+                        #
+                      </th>
                       <th scope="col" className="border-0">
                         Nom Machine
                       </th>
@@ -116,7 +118,8 @@ class TableMachineUtilisé extends Component {
                       <td></td>
                       <td></td>
                       <td></td>
-                      <td>Prix total : {this.state.prixTotal}</td>
+                      <td></td>
+                      <td>Prix total : {this.state.fullPrice}</td>
                     </tr>
                     </tbody>
                   </table>

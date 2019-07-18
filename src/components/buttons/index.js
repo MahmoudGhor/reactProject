@@ -7,9 +7,10 @@ import CreateMachineButton from './ButtonCreerMachine';
 import CreateOffreDePrixButton from './ButtonCreerOffreDePrix';
 import CreatePieceButton from './ButtonCreerPiece';
 import CreerClientForClientNavBar from './ButtonCreerClientForClientNavBar';
+import SelectMachine from './ButtonSelectMachine'
 
 export {
-    CreateClientButton,CreerOffreDePrix,CreerUtilisateur,CreerDevis,CreateStockButton,CreateMachineButton,CreateOffreDePrixButton,CreatePieceButton,CreerClientForClientNavBar
+    CreateClientButton,CreerOffreDePrix,SelectMachine,CreerUtilisateur,CreerDevis,CreateStockButton,CreateMachineButton,CreateOffreDePrixButton,CreatePieceButton,CreerClientForClientNavBar
 
 
 }

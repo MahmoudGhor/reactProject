@@ -8,6 +8,7 @@ const clientRoutes = require('./routes/client');
 const offrePrixRoutes = require('./routes/offreprix');
 const machineRoutes = require('./routes/machine');
 const stockRoutes = require('./routes/stock');
+const ordreRoutes = require('./routes/ordreProductions');
 
 const app = express();
 app.use(cors());
@@ -21,6 +22,7 @@ app.use("/application/clients",clientRoutes);
 app.use("/application/offrePrix",offrePrixRoutes);
 app.use("/application/machine",machineRoutes);
 app.use("/application/stock",stockRoutes);
+app.use("/application/ordre",ordreRoutes);
 
 
 module.exports = app;

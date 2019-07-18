@@ -13,6 +13,7 @@ class TableMatiereUtilisé extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      id:null,
       stocks: [],
       prix_parKg:null,
       etat: false,
@@ -39,14 +40,21 @@ class TableMatiereUtilisé extends Component {
     for (let i = 0; i < stocks.length; i++) {
       if (stocks[i]._id === e.target.value){
         this.setState({prix_parKg: stocks[i].prix_par_kg});
+        this.setState({id:stocks[i]._id});
       }
     }
   };
 
   onchangePoids = e => {
     this.setState({poids: e.target.value});
-    this.setState({prixMatiereTotal : e.target.value * this.state.prix_parKg})
-  }
+    this.setState({prixMatiereTotal : e.target.value * this.state.prix_parKg});
+    this.props.getMatiere({
+      id_stock:this.state.id,
+      poids:e.target.value
+    });
+    var pricee = e.target.value * this.state.prix_parKg
+    this.props.getPrixMatiere(pricee);
+  };
 
   render() {
     if (this.state.stocks.length === 0 && this.state.etat === false) {

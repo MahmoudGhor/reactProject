@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const machineController = require("../controllers/machines");
 router.get('/', machineController.getAll);
+router.get('/functionMachine', machineController.getAllFunctionMachine);
 router.post('/', machineController.create);
 router.get('/:machineId', machineController.getById);
 router.put('/:machineId', machineController.updateById);

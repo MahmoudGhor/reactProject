@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
+import {Col, FormInput, FormSelect} from "shards-react";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -15,6 +16,9 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import {Redirect} from "react-router-dom";
 import {connect} from "react-redux";
 import {compose} from "recompose";
+import swal from 'sweetalert';
+import axios from "axios";
+import Spinner from "../common/Spinner";
 
 
 import Dialog from '@material-ui/core/Dialog';
@@ -51,65 +55,76 @@ const styles = theme => ({
   },
 });
 
-class UpdateMachine extends React.Component {
+class SelectMachine extends React.Component {
   state = {
-    activeStep: 0,
-    fonctionne: false,
-    name: this.props.machine.name,
-    reference: this.props.machine.reference,
-    prix_par_hr: this.props.machine.prix_par_hr,
-    nombre_hr_travail: this.props.machine.nombre_hr_travail,
-    etat: this.props.machine.etat,
-
-    errors: {}
+    machine: [],
+    etat: false,
+    errors: {},
+    id: '',
+    prixMachineParHeure: 0,
+    NombreTotalHeures: 0,
+    nbHeure: 0
   };
 
-  changereference(e) {
-    this.setState({reference: e.target.value});
-  }
 
-  changename(e) {
-    this.setState({name: e.target.value});
-  }
+  componentDidMount() {
+    axios({
+      method: 'get',
+      url: 'http://localhost:3001/application/machine/functionMachine'
 
-  changeprix_par_Heur(e) {
-    this.setState({prix_par_hr: e.target.value});
-  }
-
-  changenombre_hr_travail(e) {
-    this.setState({nombre_hr_travail: e.target.value});
-  }
-
-  changeetat() {
-    this.setState(state => ({etat: !state.etat}));
+    }).then((res) => {
+      this.setState({
+        etat: true,
+        machine: res.data.data.machines,
+      })
+    })
   }
 
   handleClose = () => {
-    const machineData = {
-      id: this.props.machine._id,
-      name: this.state.name,
-      reference: this.state.reference,
-      prix_par_hr: this.state.prix_par_hr,
-      nombre_hr_travail: this.state.nombre_hr_travail,
-      etat: this.state.etat
-    };
+    for (let i = 0; i < this.state.machine.length; i++) {
+      if (this.state.machine[i]._id === this.state.id) {
+        const myMachine = {
+          ...this.state.machine[i],
+          nbHeure: this.state.nbHeure
+        }
 
-    this.props.onClose(machineData)
+        this.props.onClose(myMachine);
+      }
+    }
   };
-
-  handleCloseWithoutNothing = () => {
-    this.props.onClose(null);
-  }
   handlecheckboxchange = () => {
     this.setState(state => ({fonctionne: !state.fonctionne}))
 
   };
+  handleCloseWithoutNothing = () => {
+    this.props.onClose(null)
+  };
+
+  changeMachine = e => {
+    for (let i = 0; i < this.state.machine.length; i++) {
+      if (this.state.machine[i]._id === e.target.value) {
+        this.setState({
+          id: this.state.machine[i]._id,
+          prixMachineParHeure: this.state.machine[i].prix_par_hr,
+          NombreTotalHeures: this.state.machine[i].nombre_hr_travail
+        });
+      }
+    }
+  };
+
+
+  setnbHeure = e => {
+    this.setState({nbHeure: e.target.value})
+  };
 
 
   render() {
+
     const {activeStep} = this.state;
     const {classes, onClose, selectedValue, ...other} = this.props;
-
+    if (this.state.machine.length === 0 && this.state.etat === false) {
+      return <Spinner/>;
+    }
 
     return (
       <Dialog onClose={this.handleCloseWithoutNothing} aria-labelledby="simple-dialog-title" {...other}>
@@ -117,40 +132,34 @@ class UpdateMachine extends React.Component {
         <main className={classes.main}>
           <CssBaseline/>
           <Paper className={classes.paper}>
-            <div>
-              <img
-                style={{maxWidth: "60px"}}
-                src={window.location.origin + '/images/UpdateUser.png'}
-                alt="Shards Dashboard"
-              />
-            </div>
+            <img
+              style={{maxWidth: "60px"}}
+              src={window.location.origin + '/images/1004733.png'}
+              alt="Shards Dashboard"
+            />
             <Typography component="h1" variant="h5">
-              nouveua machine
+              Selectionnez votre machine
             </Typography>
             <div className={classes.form}>
-            <FormControl margin="normal" required fullWidth>
-                <InputLabel htmlFor=" Name">Nom</InputLabel>
-                <Input id="Name" type="text" name=" Name" onChange={this.changename.bind(this)} defaultValue={this.props.machine.name} autoComplete="Name" autoFocus/>
-              </FormControl>
+              <FormSelect onClick={this.changeMachine.bind(this)}>
+                <option>Choose ...</option>
+                {this.state.machine.map((item) => <option value={item._id}>{item.name}</option>)}
+              </FormSelect>
               <FormControl margin="normal" required fullWidth>
-                <InputLabel htmlFor=" Name">reference</InputLabel>
-                <Input type='number' id="Reference" onChange={this.changereference.bind(this)}  defaultValue={this.props.machine.reference} name=" Name" autoComplete="Name"/>
-              </FormControl>
-              <FormControl margin="normal" required fullWidth>
-                <InputLabel htmlFor="prix_par_Heur">prix par Heur</InputLabel>
-                <Input type='number' id="prix_par_Heur" onChange={this.changeprix_par_Heur.bind(this)} defaultValue={this.props.machine.prix_par_hr} name="prix_par_Heur"
-                       autoComplete="prix_par_Heur"/>
-              </FormControl>
-              <FormControl margin="normal" required fullWidth>
-                <InputLabel htmlFor="nombre_hr_travail">nombre d'heur de travail </InputLabel>
-                <Input name="nombre_hr_travail" onChange={this.changenombre_hr_travail.bind(this)} defaultValue={this.props.machine.nombre_hr_travail}
+                <InputLabel htmlFor="NombreTotalHeures">NombreTotalHeures</InputLabel>
+                <Input name="nombre_hr_travail" value={this.state.NombreTotalHeures} disabled
                        type="number" id="nombre_hr_travail" autoComplete="current-nombre_hr_travail"/>
               </FormControl>
-
-              <FormControlLabel
-                control={<Checkbox onChange={this.changeetat.bind(this)} color="primary"/>}
-                label={this.state.etat ? "fonctionnelle" : "en panne"}
-              />
+              <FormControl margin="normal" required fullWidth>
+                <InputLabel htmlFor="prixMachineParHeure">prixMachineParHeure</InputLabel>
+                <Input name="prixMachineParHeure" disabled value={this.state.prixMachineParHeure}
+                       type="number" id="nombre_hr_travail" autoComplete="current-nombre_hr_travail"/>
+              </FormControl>
+              <FormControl margin="normal" required fullWidth>
+                <InputLabel htmlFor="prixMachineParHeure">nombre d'heure de travail</InputLabel>
+                <Input name="prixMachineParHeure" onChange={this.setnbHeure.bind(this)}
+                       type="number" id="nombre_hr_travail" autoComplete="current-nombre_hr_travail"/>
+              </FormControl>
 
               <Button
                 type="submit"
@@ -160,7 +169,7 @@ class UpdateMachine extends React.Component {
                 className={classes.submit}
                 onClick={this.handleClose.bind(this)}
               >
-                ajouter une Machine
+                Valider la machine Machine
               </Button>
             </div>
           </Paper>
@@ -180,4 +189,4 @@ export default compose(
   connect(
     mapStateToProps,
   )
-)(UpdateMachine);
+)(SelectMachine);
