@@ -14,6 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 import Dialog from '@material-ui/core/Dialog';
+import swal from 'sweetalert';
 
 const styles = theme => ({
   main: {
@@ -61,6 +62,27 @@ class CreerUtilisateur extends React.Component {
       name : this.state.name ,
       lastname : this.state.lastname
     };
+    
+    //matikhdemch comme il faut 
+
+      if (infoUser.email.trim()==''){
+          swal("adresse email vide!", {
+            icon: "warning",
+          });
+          
+        
+    
+        }else if (infoUser.name.trim()==''){
+          swal("nom  vide!", {
+            icon: "warning",
+          });
+        }else if (infoUser.lastname.trim()==''){
+            swal("prenom  vide!", {
+              icon: "warning",
+            });
+          
+
+          }else 
     this.props.onClose(infoUser);
   };
 
@@ -114,7 +136,7 @@ class CreerUtilisateur extends React.Component {
           </FormControl>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="email">Addresse Email </InputLabel>
-            <Input id="email" name="email" onChange={this.changeEmail.bind(this)} defaultValue={this.props.user.email} autoComplete="email"  />
+            <Input id="email" type="email" name="email" onChange={this.changeEmail.bind(this)} defaultValue={this.props.user.email} autoComplete="email"  />
           </FormControl>
           <Button
             type="submit"

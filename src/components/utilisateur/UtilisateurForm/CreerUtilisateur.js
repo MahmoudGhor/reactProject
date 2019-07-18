@@ -14,6 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 import Dialog from '@material-ui/core/Dialog';
+import swal from 'sweetalert';
 
 const styles = theme => ({
   main: {
@@ -85,7 +86,31 @@ class CreerUtilisateur extends React.Component {
         email: this.state.email,
         lastname: this.state.lastname,
         password: this.state.password,
-      }
+      };
+      if (user.name.trim() ==''){
+        swal("adresse name vide!", {
+          icon: "warning",
+        });
+        
+      }else if (user.password.trim() ==''){
+        swal("mot de passe  vide!", {
+          icon: "warning",
+        });
+  
+      }else if (user.email.trim() ==''){
+        swal("email  vide!", {
+          icon: "warning",
+        });
+      }else if (user.lastname.trim() ==''){
+          swal("prenom  vide!", {
+            icon: "warning",
+          });
+        }else if (user.pwd ==! user.pwd2)
+        {
+          swal("mot de passe non comfirmer ", {
+            icon: "warning",
+          });
+        }else 
       this.props.onClose(user);
     }else{
       this.props.onClose(null);

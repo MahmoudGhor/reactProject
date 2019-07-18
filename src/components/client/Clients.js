@@ -72,13 +72,42 @@ class Clients extends Component {
 
     })
   }
+   
+  removed =e => {
+    for (let i = 0; i < e.length; i++) {
+      axios({
+        method: 'delete',
+        url: 'http://localhost:3001/application/clients/'+e[i]
 
+      }).then((res) => {
+        this.setState({
+          stocks: res.data.data.clients,
+        })
+      })
+    }
+  }
 
   render() {
+   
+    const options = {
+      
+      serverSide: true,
+      onRowsDelete: (rowData) => {
+        const idTable =[];
+          for (let i = 0; i < rowData.data.length; i++){
+            idTable.push(clients[rowData.data[i].dataIndex]._id)
+          }
+          
+          this.removed(idTable);
+
+
+      }
+    };
+    const {classes} = this.props;
     if (this.state.clients.length === 0 && this.state.etat === false ) {
       return <Spinner/>;
     }
-    const {classes} = this.props;
+    
     const {clients} = this.state;
     const data = [];
     let listClient;

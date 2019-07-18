@@ -106,8 +106,13 @@ class SignUp extends  Component {
             swal("prenom  vide!", {
               icon: "warning",
             });
+          }else if (userdata.pwd ==! userdata.pwd2)
+          {
+            swal("mot de passe non comfirmer ", {
+              icon: "warning",
+            });
 
-          }else
+          }else 
 
         this.props.registerUser(userdata);
     }else{
