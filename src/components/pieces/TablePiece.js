@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Container, Row, Col, Card, CardHeader, CardBody, FormInput} from "shards-react";
 
 import PageTitle from "../common/PageTitle";
+import swal from 'sweetalert';
 import IconButton from '@material-ui/core/IconButton';
 import toRenderProps from 'recompose/toRenderProps';
 import withState from 'recompose/withState';
@@ -42,7 +43,24 @@ class TablePiece extends Component {
       sousTraitance:this.state.soustraitance,
       elementStandards:this.state.element,
       name:this.state.name
-    }
+    if (piece.dateEntre.trim() ==''){
+       swal("dateEntre vide!", {
+        icon: "warning",
+      });
+    }else if(piece.value.trim() ==''){
+      swal(" dateSortie vide!", {
+        icon: "warning",
+      });
+    }else if(piece.soustraitance.trim() ==''){
+      swal(" sousTraitance vide!", {
+        icon: "warning",
+      });
+    }else if(piece.elementStandards.trim() ==''){
+      swal("  element Standards vide!", {
+        icon: "warning",
+      });
+    }else
+   
     this.props.getPiece(piece);
   };
   render() {
