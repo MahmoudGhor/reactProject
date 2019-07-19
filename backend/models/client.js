@@ -38,10 +38,6 @@ const clientSchema = new Schema({
     trim: true,
     required: true
   },
-  id_offreprix: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'offreprix',
-  }]
 });
 
 module.exports = mongoose.model('client', clientSchema)

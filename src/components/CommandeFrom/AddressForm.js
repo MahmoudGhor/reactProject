@@ -49,8 +49,9 @@ class AddressForm extends Component {
   }
 
   handleChange = value => {
-    console.log(value.target.value);
+    //console.log(value.target.value);
     this.setState({selectedClient: value.target.value});
+    this.props.ClientSelected(value.target.value);
   };
 
   handleClose = value => {
@@ -69,11 +70,6 @@ class AddressForm extends Component {
     const openClientForm = () => {
       PubSub.publish('openCrerclient', null);
     };
-    console.log(this.state.clients);
-    let interfacelistClient = [];
-    interfacelistClient = this.state.clients.map(client => (
-      <ListClient client={client} key={client._id}/>
-    ));
 
 
     return (
@@ -86,7 +82,7 @@ class AddressForm extends Component {
             <FormControl className={classes.formControl}>
               <div>
                 <InputLabel htmlFor="demo-controlled-open-select">selectionner un client</InputLabel>
-                <Select style={{width: '200px'}}
+                <Select  style={{width: '200px'}}
                         open={this.state.open}
                         onClose={this.handleClose}
                         onOpen={this.handleOpen}

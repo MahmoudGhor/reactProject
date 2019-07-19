@@ -1,29 +1,46 @@
 const offreprixsModel = require('../models/offreprix');
+const clientModel = require('../models/client');
+const ordreProduction = require('../models/ordreProduction');
+const stockModel = require('../models/stock');
 exports.getById = function (req, res, next) {
-  console.log(req.body);
-  offreprixsModel.findById(req.params.offreprixsId, function (err, offreprixInfo) {
+  console.log(req.params.id);
+  offreprixsModel.findById(req.params.id, function (err, offreprixInfo) {
+    console.log(offreprixInfo);
     if (err) {
       next(err);
     } else {
-      res.json({status: "success", message: "offreprix found!!!", data: {offreprixs: offreprixInfo}});
+      clientModel.findById(offreprixInfo.id_client, function (err, clientInfo) {
+        if (err) {
+          next(err);
+        } else {
+          ordreProduction.findById(offreprixInfo.id_ordreProduction, function (err, ordreInfo) {
+            if (err) {
+              next(err);
+            } else {
+              stockModel.findById(ordreInfo.id_stock, function (err, stockInfo) {
+                if (err) {
+                  next(err);
+                } else {
+                  res.json({
+                    status: "success",
+                    message: "offreprix found!!!",
+                    data: {offreprixs: offreprixInfo, client: clientInfo, ordre: ordreInfo , stock : stockInfo}
+                  });
+                }
+              });
+            }
+          });
+        }
+      });
     }
   });
 };
 exports.getAll = function (req, res, next) {
-  let offreprixsList = [];
-  offreprixsModel.find({}, function (err, offreprixs) {
+  offreprixsModel.find({}, function (err, offres) {
     if (err) {
-      next(err);
+      return res.json(err);
     } else {
-      for (let offreprix of offreprixs) {
-        offreprixsList.push({
-          id: offreprix._id, prix_traitement: offreprix.prix_traitement, prix_peinture: offreprix.prix_peinture,
-          prix_peinture: offreprix.prix_peinture, date: offreprix.date
-
-        });
-      }
-      res.json({status: "success", message: "offreprixs list found!!!", data: {offreprixs: offreprixsList}});
-
+      return res.json({status: "success", message: "offre list found!!!", data: {offreprixs: offres}});
     }
   });
 };
@@ -48,12 +65,20 @@ exports.deleteById = function (req, res, next) {
 };
 exports.create = function (req, res, next) {
   offreprixsModel.create({
-    type: req.body.type, prix_peinture: req.body.prix_peinture, prix_peinture: req.body.prix_peinture,
+    id_ordreProduction: req.body.id_ordreProduction, id_client: req.body.id_client,
+    prix_peinture: req.body.prix_peinture, prix_traitement: req.body.prix_traitement,
   }, function (err, result) {
     if (err)
       next(err);
     else
-      res.json({status: "success", message: "offreprix added successfully!!!", data: null});
+      offreprixsModel.find({}, function (err, offres) {
+        if (err) {
+          return res.json(err);
+        } else {
+          return res.json({status: "success", message: "offre list found!!!", data: {offreprixs: offres}});
+
+        }
+      });
 
   });
 };

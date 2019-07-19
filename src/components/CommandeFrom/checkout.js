@@ -11,6 +11,7 @@ import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import AddressForm from './AddressForm';
+import axios from "axios";
 
 import Review from './ReviewForm';
 import Dialog from '@material-ui/core/Dialog';
@@ -54,31 +55,53 @@ const styles = theme => ({
 
 const steps = ['Selectionnez le client',  'à propos loffre de prix'];
 
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <AddressForm />;
-    case 1:
-
-      return <Review />;
-    default:
-      throw new Error('Unknown step');
-  }
-}
-
 class Checkout extends React.Component {
   state = {
+    client: null,
     activeStep: 0,
+    offreDePrix:null,
   };
 
   handleClose = () => {
-    this.props.onClose(this.props.selectedValue);
+    this.props.onClose(this.state.offreDePrix);
+
   };
+  getClient =e =>{
+    axios({
+      method: 'get',
+      url: 'http://localhost:3001/application/clients/'+e
+
+    }).then((res) => {
+      this.setState({
+        client: res.data.data.clients,
+      })
+    });
+
+  };
+
+  getoffrePrix = e => {
+    this.setState({offreDePrix : e});
+  }
+
+  getStepContent(step) {
+    switch (step) {
+      case 0:
+        return <AddressForm ClientSelected={this.getClient.bind(this)} />;
+      case 1:
+
+        return <Review getOffrePrix={this.getoffrePrix.bind(this)} selectedClient={this.state.client} />;
+      default:
+        throw new Error('Unknown step');
+    }
+  }
 
   handleNext = () => {
     this.setState(state => ({
       activeStep: state.activeStep + 1,
     }));
+    if (this.state.activeStep === 1){
+      this.handleClose();
+    }
   };
 
   handleBack = () => {
@@ -104,7 +127,7 @@ class Checkout extends React.Component {
           <main className={classes.layout}>
             <Paper className={classes.paper}>
               <Typography component="h1" variant="h4" align="center">
-                offre de prix 
+                offre de prix
             </Typography>
               <Stepper activeStep={activeStep} className={classes.stepper}>
                 {steps.map(label => (
@@ -125,7 +148,7 @@ class Checkout extends React.Component {
                   </React.Fragment>
                 ) : (
                     <React.Fragment>
-                      {getStepContent(activeStep)}
+                      {this.getStepContent(activeStep)}
                       <div className={classes.buttons}>
                         {activeStep !== 0 && (
                           <Button onClick={this.handleBack} className={classes.button}>

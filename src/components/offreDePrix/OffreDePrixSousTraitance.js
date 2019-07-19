@@ -9,10 +9,55 @@ import {
   Button, Container
 } from "shards-react";
 import IconButton from "@material-ui/core/IconButton";
+import axios from "axios";
+import Spinner from "../common/Spinner";
 
 
 class SidebarActions extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      etat: false,
+      offre: null,
+      machine:[]
+    }
+  }
+
+  componentDidMount() {
+    axios({
+      method: 'get',
+      url: 'http://localhost:3001/application/offrePrix/getbyid/'+this.props.idselected
+
+    }).then((res) => {
+      this.setState({
+        etat: true,
+        offre: res.data.data,
+      });
+      for (let i = 0; i < res.data.data.ordre.ordreMachine.length; i++) {
+        axios({
+          method: 'get',
+          url: 'http://localhost:3001/application/machine/'+res.data.data.ordre.ordreMachine[i].id_machine
+
+        }).then((res1) => {
+          const mach = {
+            machine: res1.data.data.machines,
+            nb_heures:res.data.data.ordre.ordreMachine[i].nb_heures
+          };
+          var listMachine = this.state.machine;
+          listMachine.push(mach);
+          this.setState({
+            machine:listMachine
+          })
+        })
+      }
+    })
+  }
+
+
   render() {
+    if (this.state.offre === null && this.state.etat === false) {
+      return <Spinner/>;
+    }
     return (
       <Container fluid className="main-content-container px-4">
 
@@ -22,11 +67,14 @@ class SidebarActions extends Component {
               <div>
                 <div id="container" style={{position: 'relative', padding: '4%'}}>
                   <div id="header" style={{height: '80px'}}>
-                    <div id="logo"><img src="http://localhost:3000/images/logo.png" alt style={{width: '6%', float: 'left'}}/>
+                    <div id="logo"><img src="http://localhost:3000/images/logo.png" alt
+                                        style={{width: '6%', float: 'left'}}/>
                     </div>
                     <div id="reference" style={{float: 'right', textAlign: 'right'}}><h3 style={{margin: '0px'}}>
-                      <strong>Offre de Prix</strong></h3><h4 style={{margin: '0px', fontSize: '85%', fontWeight: 600}}>Réf. :
-                      FA1703-00001</h4><p style={{margin: '2% 0px 0px', fontSize: '85%'}}>Date facturation : 16/06/2019</p>
+                      <strong>Offre de Prix</strong></h3><h4
+                      style={{margin: '0px', fontSize: '85%', fontWeight: 600}}>Réf. :
+                      FA1703-00001</h4><p style={{margin: '2% 0px 0px', fontSize: '85%'}}>Date facturation :
+                      16/06/2019</p>
                     </div>
                   </div>
                   <div id="fromto" style={{height: '160px'}}>
@@ -38,7 +86,8 @@ class SidebarActions extends Component {
                       fontSize: '85%',
                       height: '85%',
                       padding: '1.5%'
-                    }}><p><strong>SOPROCOM</strong><br/>rue mohamed abed laziz Souse <br/>4060 Souse <br/><br/>Tél.: 01 00 00 00
+                    }}><p><strong>SOPROCOM</strong><br/>rue mohamed abed laziz Souse <br/>4060 Souse <br/><br/>Tél.: 01
+                      00 00 00
                       00 <br/>Email: contact@website.com </p></div>
                     <div id="to" style={{
                       float: 'right',
@@ -74,32 +123,33 @@ class SidebarActions extends Component {
                         <strong>
                           Clients:
                         </strong>
-                        Ons
+                        {this.state.offre.client.name} {this.state.offre.client.lastname}
                         <br/>
                         <br/>
                         <strong>
                           Date:
                         </strong>
-                        28/06/2019
+                        {this.state.offre.client.date_de_naissance}
                         <br/>
                         <br/>
                         <strong>
                           Numero Offre de Prix:
                         </strong>
-                        3
+                        {this.state.offre.offreprixs._id}
                         <br/>
                         <br/>
                         <strong>
                           Matieres:
                         </strong>
-                        Fer,Cuivre
+                        {this.state.offre.stock.nomP}
 
                       </p>
                     </div>
                   </div>
                   <br/><br/><br/><br/>
                   <div id="items"><p
-                    style={{fontWeight: 700, textAlign: 'right', marginBottom: '1%', fontSize: '65%'}}>Tableau des taches</p>
+                    style={{fontWeight: 700, textAlign: 'right', marginBottom: '1%', fontSize: '65%'}}>Tableau des
+                    taches</p>
                     <table style={{width: '100%', fontSize: '85%', border: 'solid grey 1px'}}>
                       <tbody>
                       <tr style={{border: 'solid grey 1px'}}>
@@ -114,18 +164,20 @@ class SidebarActions extends Component {
                         </th>
 
                       </tr>
+                      {this.state.machine.map((item) =>
                       <tr>
                         <td style={{paddingTop: '8px'}}>
-                          <center>machine1</center>
+                          <center>{item.machine.name}</center>
                         </td>
                         <td style={{paddingTop: '8px'}}>
-                          <center>225 heures</center>
+                          <center>{item.nb_heures}</center>
                         </td>
                         <td style={{paddingTop: '8px'}}>
-                          <center>12dt</center>
+                          <center>{item.machine.prix_par_hr}</center>
                         </td>
 
                       </tr>
+                      )}
                       <tr>
                         <td/>
                         <td/>
@@ -147,6 +199,9 @@ class SidebarActions extends Component {
                         <th style={{textAlign: 'left', fontWeight: 400, padding: '1px 4px', width: '33%'}}>
                           <center>Prix de sous traitance</center>
                         </th>
+                        <th style={{textAlign: 'left', fontWeight: 400, padding: '1px 4px', width: '33%'}}>
+                          <center>Prix de l'element standars</center>
+                        </th>
                         <th style={{fontWeight: 400, padding: '1px 4px', width: '33%'}}>
                           <center>Prix de traitement</center>
                         </th>
@@ -157,17 +212,21 @@ class SidebarActions extends Component {
                       </tr>
                       <tr>
                         <td style={{paddingTop: '8px'}}>
-                          <center>25dt</center>
+                          <center>{this.state.offre.ordre.sousTraitance}</center>
                         </td>
                         <td style={{paddingTop: '8px'}}>
-                          <center>100dt</center>
+                          <center>{this.state.offre.ordre.elementStandards}</center>
                         </td>
                         <td style={{paddingTop: '8px'}}>
-                          <center>50dt</center>
+                          <center>{this.state.offre.offreprixs.prix_traitement}</center>
+                        </td>
+                        <td style={{paddingTop: '8px'}}>
+                          <center>{this.state.offre.offreprixs.prix_peinture}</center>
                         </td>
 
                       </tr>
                       <tr>
+                        <td/>
                         <td/>
                         <td/>
                         <td/>
@@ -177,42 +236,50 @@ class SidebarActions extends Component {
                   </div>
 
 
-                  <div id="summary" style={{height: '170px', marginTop: '30px'}}>
-                    <div id="note" style={{float: 'left'}}><h4
-                      style={{fontSize: '10px', fontWeight: 600, fontStyle: 'italic', marginBottom: '4px'}}>Note :</h4><p
-                      style={{fontSize: '10px', fontStyle: 'italic'}}>Information complémentaire à ajouter.</p><textarea
-                      defaultValue={""}/></div>
-                    <div id="total">
-                      <table border={1} style={{fontSize: '85%', width: '260px', float: 'right'}}>
-                        <tbody>
-                        <tr>
-                          <td>Prix Total</td>
-                          <td>399</td>
-                        </tr>
-                        <tr>
-                          <td>Prix Taxé</td>
-                          <td>380</td>
-                        </tr>
-                        <tr>
-                          <td>Droit de Timbres</td>
-                          <td>50</td>
-                        </tr>
-                        <tr>
-                          <td>Marge de Prix</td>
-                          <td>15%</td>
-                        </tr>
-                        <tr>
-                          <td>Prix Total Offert</td>
-                          <td>450</td>
-                        </tr>
-                        <tr style={{background: '#efefef', fontWeight: 600}}>
-                          <td style={{padding: '3px 4px'}}>Total TTC</td>
-                          <td>4,79</td>
-                        </tr>
-                        </tbody>
-                      </table>
-                    </div>
+
+
+                  <br/><br/>
+
+
+                  <div id="items"><p
+                    style={{fontWeight: 700, textAlign: 'right', marginBottom: '1%', fontSize: '65%'}}>Tableau de sous
+                    traitance</p>
+                    <table style={{width: '100%', fontSize: '85%', border: 'solid grey 1px'}}>
+                      <tbody>
+                      <tr style={{border: 'solid grey 1px'}}>
+                        <th style={{textAlign: 'left', fontWeight: 400, padding: '1px 4px', width: '33%'}}>
+                          <center>Date Entree</center>
+                        </th>
+                        <th style={{textAlign: 'left', fontWeight: 400, padding: '1px 4px', width: '33%'}}>
+                          <center>Date Sortie</center>
+                        </th>
+                        <th style={{fontWeight: 400, padding: '1px 4px', width: '33%'}}>
+                          <center>Poids ordre</center>
+                        </th>
+                      </tr>
+                      <tr>
+                        <td style={{paddingTop: '8px'}}>
+                          <center>{this.state.offre.ordre.dateEntree}</center>
+                        </td>
+                        <td style={{paddingTop: '8px'}}>
+                          <center>{this.state.offre.ordre.dateSortie}</center>
+                        </td>
+                        <td style={{paddingTop: '8px'}}>
+                          <center>{this.state.offre.ordre.poids}</center>
+                        </td>
+
+                      </tr>
+                      <tr>
+                        <td/>
+                        <td/>
+                        <td/>
+
+                      </tr>
+                      </tbody>
+                    </table>
                   </div>
+
+
                   <div id="footer" style={{
                     margin: 'auto',
                     position: 'absolute',
@@ -221,7 +288,8 @@ class SidebarActions extends Component {
                     right: '4%',
                     borderTop: 'solid grey 1px'
                   }}><p style={{marginTop: '1%', fontSize: '65%', lineHeight: '140%', textAlign: 'center'}}>Société à
-                    responsabilité limité (SARL) - Capital de 1 000 000 € - SIRET: 87564738493127 <br/>NAF-APE: 6202A - Num.
+                    responsabilité limité (SARL) - Capital de 1 000 000 € - SIRET: 87564738493127 <br/>NAF-APE: 6202A -
+                    Num.
                     TVA: FR28987856541</p></div>
                   <div><p align="right"><input type="button" defaultValue=" valider"/></p><br/><br/><br/><br/><br/><p
                     align="right"><input type="button" defaultValue=" imprimer"/></p></div>

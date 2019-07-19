@@ -15,6 +15,10 @@ const ordreProductionSchema = new Schema({
     trim: true
   },
   ordreMachine: [OrdreMachine],
+  name: {
+    type: String,
+    trim: true
+  },
   dateEntree: {
     type: String,
     trim: true

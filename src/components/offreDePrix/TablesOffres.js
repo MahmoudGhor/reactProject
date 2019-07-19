@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Container, Row, Col, Card, CardHeader, CardBody} from "shards-react";
 import swal from 'sweetalert';
+import DonneeOffre from './DonneeOffre';
 
 
 import PageTitle from "../common/PageTitle";
@@ -31,8 +32,17 @@ class Tables extends Component {
       });
   };
 
+  getIdOffre =e => {
+    this.props.getoffre(e);
+  }
+
   render() {
 
+    let interfaceDonneeOffre = [];
+    interfaceDonneeOffre = this.props.listOffre.map(offre =>(
+      <DonneeOffre  getoffre={this.getIdOffre.bind(this)} key={offre._id} offre={offre}/>
+
+    ))
     return (
       <div>
 
@@ -64,19 +74,13 @@ class Tables extends Component {
                             <thead className="bg-light">
                             <tr>
                               <th scope="col" className="border-0">
-                                Nom du Machine
+                                Nom client
                               </th>
                               <th scope="col" className="border-0">
-                                Reference
+                                Nom de l'ordre
                               </th>
                               <th scope="col" className="border-0">
-                                Prix par heure
-                              </th>
-                              <th scope="col" className="border-0">
-                                Nombre d'heures totals
-                              </th>
-                              <th scope="col" className="border-0">
-                                Etat
+                                Date de creation de l'offre
                               </th>
                               <th scope="col" className="border-0">
                                 Details
@@ -84,18 +88,9 @@ class Tables extends Component {
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                              <td>Russian Federation</td>
-                              <td>Gdańsk</td>
-                              <td>107-0339</td>
-                              <td>107-0339</td>
-                              <td>107-0339</td>
-                              <td><IconButton>
-                                <img style={{ marginTop : '-20px' ,width: '30px', height: '30px', borderRadius: '10px'}}
-                                     src={window.location.origin + '/images/details.png'}/>
-                              </IconButton></td>
 
-                            </tr>
+                            {interfaceDonneeOffre}
+
                             </tbody>
                           </table>
                         </CardBody>

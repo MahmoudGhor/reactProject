@@ -7,6 +7,9 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
+import {Col, FormInput, FormSelect} from "shards-react";
+import axios from "axios";
+import Spinner from "../common/Spinner";
 import clsx from 'clsx';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import {DatePicker} from "shards-react";
@@ -55,41 +58,109 @@ const styles = theme => ({
 class ReviewForm extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      id_client:null,
+      id_ordreProduction:null,
+      listOrdres: [],
+      etat: false,
+      dateEntree: '',
+      dateSortie: '',
+      sousTraitance: '',
+      elementStandards: '',
+      prix_traitement: '',
+      prix_peinture: ''
+    }
   }
+
+  componentDidMount() {
+    this.state.id_client=this.props.selectedClient._id;
+    axios({
+      method: 'get',
+      url: 'http://localhost:3001/application/ordre/'
+
+    }).then((res) => {
+      this.setState({
+        etat: true,
+        listOrdres: res.data.data.ordre,
+      })
+    })
+  }
+
+  selectPiece = e => {
+    for (let i = 0; i < this.state.listOrdres.length; i++) {
+      if (this.state.listOrdres[i]._id === e.target.value) {
+        this.setState({
+          id_ordreProduction:this.state.listOrdres[i]._id,
+          dateEntree: this.state.listOrdres[i].dateEntree,
+          dateSortie: this.state.listOrdres[i].dateSortie,
+          sousTraitance: this.state.listOrdres[i].sousTraitance,
+          elementStandards: this.state.listOrdres[i].elementStandards
+        });
+
+      }
+    }
+  };
+
+  setPrixTraitement = e => {
+    this.setState({
+      prix_traitement: e.target.value
+    })
+  };
+
+  setPrixPeiture = e => {
+    this.setState({
+      prix_peinture: e.target.value
+    })
+
+    var offreDePrix = {
+      id_client: this.state.id_client,
+      id_ordreProduction: this.state.id_ordreProduction,
+      prix_traitement:this.state.prix_traitement,
+      prix_peinture:e.target.value
+
+    };
+    this.props.getOffrePrix(offreDePrix);
+  };
+
 
   render() {
     const {classes} = this.props;
+
+    if (this.state.listOrdres.length === 0 && this.state.etat === false) {
+      return <Spinner/>;
+    }
+
     return (
       <React.Fragment>
         <Typography variant="h6" gutterBottom>
-          Nom client 
+          Client
         </Typography>
-        
+
         <TextField
-            id="name"
-            label="Nom"
-            //value={values.age}
-            //onChange={handleChange('age')}
-            type="string"
-            className={classes.textField}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            margin="normal"
-          />
-           <TextField
-            id="name"
-            label="Prenom"
-            //value={values.age}
-            //onChange={handleChange('age')}
-            type="string"
-            className={classes.textField}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            margin="normal"
-          />
-        
+          id="name"
+          label="Nom"
+          value={this.props.selectedClient.name}
+          //onChange={handleChange('age')}
+          type="string"
+          className={classes.textField}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          margin="normal"
+        />
+        <TextField
+          id="name"
+          label="Prenom"
+          value={this.props.selectedClient.lastname}
+          //onChange={handleChange('age')}
+          type="string"
+          className={classes.textField}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          margin="normal"
+        />
+
         <Typography variant="h6" gutterBottom>
           Date de l'offre
         </Typography>
@@ -98,6 +169,8 @@ class ReviewForm extends Component {
             id="name"
             label="Prenom"
             type="date"
+            value={this.state.dateEntree}
+            disabled
             className={classes.textField}
             InputLabelProps={{
               shrink: true,
@@ -107,7 +180,9 @@ class ReviewForm extends Component {
             id="date"
             label="Date fin"
             type="date"
+            disabled
             className={classes.textField}
+            value={this.state.dateSortie}
             InputLabelProps={{
               shrink: true,
             }}
@@ -115,45 +190,18 @@ class ReviewForm extends Component {
         </div>
         <br/>
         <Typography variant="h6" gutterBottom>
-         piece choisie
+          piece choisie
         </Typography>
-        
-        <TextField
-            id="name"
-            label="Nom piece"
-            //<Col md="10" className="form-group">
-          //<FormSelect onClick={this.changePiece.bind(this)}>
-         // <option>Choose ...</option>
-          //{this.props.listPiece.map((item) => <option value={item._id}>{item.name}</option>)}
-        //</FormSelect>
-      //</Col>
-            //value={values.age}
-            //onChange={handleChange('age')}
-            type="string"
-            className={classes.textField}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            margin="normal"
-          />
+
+        <FormSelect onClick={this.selectPiece.bind(this)}>
+          <option>Choose ...</option>
+          {this.state.listOrdres.map((item) => <option value={item._id}>{item.name}</option>)}
+        </FormSelect>
         <div className={classes.margin}>
           <TextField
             id="standard-number"
             label="prix element standard"
-            //value={values.age}
-            //onChange={handleChange('age')}
-            type="number"
-            className={classes.textField}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            margin="normal"
-          />
-          <TextField
-            id="standard-number"
-            label="prix aaaa"
-            //value={values.age}
-            //onChange={handleChange('age')}
+            value={this.state.elementStandards}
             type="number"
             className={classes.textField}
             InputLabelProps={{
@@ -164,8 +212,7 @@ class ReviewForm extends Component {
           <TextField
             id="standard-number"
             label="prix de soutretance"
-            //value={values.age}
-            //onChange={handleChange('age')}
+            value={this.state.sousTraitance}
             type="number"
             className={classes.textField}
             InputLabelProps={{
@@ -177,7 +224,7 @@ class ReviewForm extends Component {
             id="standard-number"
             label="prix de traitement"
             //value={values.age}
-            //onChange={handleChange('age')}
+            onChange={this.setPrixTraitement.bind(this)}
             type="number"
             className={classes.textField}
             InputLabelProps={{
@@ -189,7 +236,7 @@ class ReviewForm extends Component {
             id="standard-number"
             label="prix de peinture"
             //value={values.age}
-            //onChange={handleChange('age')}
+            onChange={this.setPrixPeiture.bind(this)}
             type="number"
             className={classes.textField}
             InputLabelProps={{
@@ -197,75 +244,9 @@ class ReviewForm extends Component {
             }}
             margin="normal"
           />
-          <Typography variant="h6" gutterBottom>
-         Autre 
-        </Typography>
-        <TextField
-            id="prix-totale"
-            label="prix-totale"
-            //value={values.age}
-            //onChange={handleChange('age')}
-            type="number"
-            className={classes.textField}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            margin="normal"
-          />
-           <TextField
-            id="prix-taxé"
-            label="prix taxé"
-            //value={values.age}
-            //onChange={handleChange('age')}
-            type="number"
-            className={classes.textField}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            margin="normal"
-          />
-           <TextField
-            id="droit-timbre"
-            label="droit de timbre"
-            //value={values.age}
-            //onChange={handleChange('age')}
-            type="number"
-            className={classes.textField}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            margin="normal"
-          />
-           <TextField
-            id="prix-marge"
-            label="marge de prix "
-            //value={values.age}
-            //onChange={handleChange('age')}
-            type="number"
-            className={classes.textField}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            margin="normal"
-          />
-          </div>
-          <Typography variant="h6" gutterBottom>
-          desicion 
-         </Typography>
-         <div>
-            <TextField
-            id="prix-offset"
-            label="prix totale offset"
-            //value={values.age}
-            //onChange={handleChange('age')}
-            type="number"
-            className={classes.textField}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            margin="normal"
-          />
+
         </div>
+
       </React.Fragment>
     );
   }

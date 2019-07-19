@@ -8,25 +8,46 @@ exports.create = (req, res, next) => {
   const ordreMachines = mongoose.model("OrdreMachine", OrdreMachine);
   console.log(req.body.machines);
   ordreProduction.create({
-    id_stock: req.body.stock.id,
+    id_stock: req.body.stock.id_stock,
     poids: req.body.stock.poids,
     dateEntree: req.body.piece.dateEntree,
     dateSortie: req.body.piece.dateSortie,
     sousTraitance: req.body.piece.sousTraitance,
     elementStandards: req.body.piece.elementStandards,
-    ordreMachine: req.body.machines
-  }, function (err, result) {
+    ordreMachine: req.body.machines,
+    name:req.body.piece.name,
+  }, async function (err, result) {
     if (err)
       next(err);
-    else{
-      for(const machine in req.body.machines){
-        console.log(machine);
-        machineModel.findByIdAndUpdate(machine.id_machine, {nombre_hr_travail: {$inc:machine.nb_heures}}, function (err, machineInfo) {
-        });
-      }
+    else {
+      await updateNombreMachine(req.body.machines);
       return res.json({status: "success", message: "enregistra"});
     }
 
+  });
+};
+
+
+exports.getAll = function (req, res, next) {
+  ordreProduction.find({}, function (err, ordres) {
+    if (err) {
+      return res.json(err);
+    } else {
+      return res.json({status: "success", message: "clients list found!!!", data: {ordre: ordres}});
+
+    }
+  });
+};
+
+
+
+async function updateNombreMachine(listeMachine) {
+  return new Promise(resolve => {
+    for(let i=0 ; i<listeMachine.length ; i++){
+      machineModel.findByIdAndUpdate(listeMachine[i].id_machine, {$inc: {nombre_hr_travail:listeMachine[i].nb_heures}}, function (err, machineInfo) {
+      });
+    }
+    return resolve();
   });
 }
 

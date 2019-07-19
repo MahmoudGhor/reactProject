@@ -11,12 +11,16 @@ class TablePiece extends Component {
     super(props);
     this.state = {
       element:0,
+      name:'',
       soustraitance:0,
       dateEntre:'',
       dateSortie:''
     }
   }
 
+  changeName =e => {
+    this.setState({name:e.target.value});
+  }
 
   changeElement =e => {
     this.setState({element:e.target.value});
@@ -37,6 +41,7 @@ class TablePiece extends Component {
       dateSortie:e.target.value,
       sousTraitance:this.state.soustraitance,
       elementStandards:this.state.element,
+      name:this.state.name
     }
     this.props.getPiece(piece);
   };
@@ -61,6 +66,9 @@ class TablePiece extends Component {
                     <thead className="bg-light">
                     <tr>
                       <th scope="col" className="border-0">
+                        Nom piece
+                      </th>
+                      <th scope="col" className="border-0">
                         Element Standard
                       </th>
                       <th scope="col" className="border-0">
@@ -76,6 +84,8 @@ class TablePiece extends Component {
                     </thead>
                     <tbody>
                     <tr>
+                      <td><FormInput type="string" onChange={this.changeName.bind(this)}
+                      /></td>
                       <td><FormInput type="number" onChange={this.changeElement.bind(this)}
                       /></td>
                       <td><FormInput type="number" onChange={this.changeSousTraitance.bind(this)}
