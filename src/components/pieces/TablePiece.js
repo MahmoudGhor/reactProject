@@ -44,23 +44,7 @@ class TablePiece extends Component {
       elementStandards: this.state.element,
       name: this.state.name
     }
-    if (piece.dateEntre.trim() ==''){
-       swal("dateEntre vide!", {
-        icon: "warning",
-      });
-    }else if(piece.value.trim() ==''){
-      swal(" dateSortie vide!", {
-        icon: "warning",
-      });
-    }else if(piece.soustraitance.trim() ==''){
-      swal(" sousTraitance vide!", {
-        icon: "warning",
-      });
-    }else if(piece.elementStandards.trim() ==''){
-      swal("  element Standards vide!", {
-        icon: "warning",
-      });
-    }else
+
 
     this.props.getPiece(piece);
   };
