@@ -67,13 +67,7 @@ exports.create = (req, res, next) => {
             return res.json({status: "success", message: "machines list found!!!", data: {stocks: stocks}});
           }
         });
-        transporter.verify(function(error, success) {
-          if (error) {
-               console.log(error);
-          } else {
-               console.log('Server is ready to take our messages');
-          }
-       });
+     
 
 
 })

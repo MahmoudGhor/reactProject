@@ -130,7 +130,7 @@ class Pieces extends Component {
               className={classes.submit}
               onClick={this.submitAll.bind(this)}
             >
-              Valider la machine Machine
+              Valider la piece
             </Button>
           </div>
         </main>
