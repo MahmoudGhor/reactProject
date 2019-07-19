@@ -38,11 +38,12 @@ class TablePiece extends Component {
   changeDateSortis = e => {
     this.setState({dateSortie:e.target.value});
     var piece = {
-      dateEntree:this.state.dateEntre,
-      dateSortie:e.target.value,
-      sousTraitance:this.state.soustraitance,
-      elementStandards:this.state.element,
-      name:this.state.name
+      dateEntree: this.state.dateEntre,
+      dateSortie: e.target.value,
+      sousTraitance: this.state.soustraitance,
+      elementStandards: this.state.element,
+      name: this.state.name
+    }
     if (piece.dateEntre.trim() ==''){
        swal("dateEntre vide!", {
         icon: "warning",
@@ -60,7 +61,7 @@ class TablePiece extends Component {
         icon: "warning",
       });
     }else
-   
+
     this.props.getPiece(piece);
   };
   render() {
