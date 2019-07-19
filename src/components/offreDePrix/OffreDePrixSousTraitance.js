@@ -19,37 +19,46 @@ class SidebarActions extends Component {
     this.state = {
       etat: false,
       offre: null,
-      machine:[]
+      machine: [],
+      prixtotal: 0
     }
   }
 
   componentDidMount() {
     axios({
       method: 'get',
-      url: 'http://localhost:3001/application/offrePrix/getbyid/'+this.props.idselected
+      url: 'http://localhost:3001/application/offrePrix/getbyid/' + this.props.idselected
 
     }).then((res) => {
+      var prix = parseInt(res.data.data.offreprixs.prix_peinture) + parseInt(res.data.data.offreprixs.prix_traitement) + parseInt(res.data.data.ordre.sousTraitance) + parseInt(res.data.data.ordre.elementStandards)
       this.setState({
         etat: true,
         offre: res.data.data,
+        prixtotal: prix
       });
       for (let i = 0; i < res.data.data.ordre.ordreMachine.length; i++) {
         axios({
           method: 'get',
-          url: 'http://localhost:3001/application/machine/'+res.data.data.ordre.ordreMachine[i].id_machine
+          url: 'http://localhost:3001/application/machine/' + res.data.data.ordre.ordreMachine[i].id_machine
 
         }).then((res1) => {
+          const prixtot = parseInt(res1.data.data.machines.prix_par_hr) * parseInt(res.data.data.ordre.ordreMachine[i].nb_heures);
+          const prixavant = this.state.prixtotal;
+          var pirxx = prixavant + prixtot;
+          this.setState({prixtotal: pirxx});
+          console.log(prix);
           const mach = {
             machine: res1.data.data.machines,
-            nb_heures:res.data.data.ordre.ordreMachine[i].nb_heures
+            nb_heures: res.data.data.ordre.ordreMachine[i].nb_heures
           };
           var listMachine = this.state.machine;
           listMachine.push(mach);
           this.setState({
-            machine:listMachine
+            machine: listMachine
           })
         })
       }
+
     })
   }
 
@@ -165,18 +174,18 @@ class SidebarActions extends Component {
 
                       </tr>
                       {this.state.machine.map((item) =>
-                      <tr>
-                        <td style={{paddingTop: '8px'}}>
-                          <center>{item.machine.name}</center>
-                        </td>
-                        <td style={{paddingTop: '8px'}}>
-                          <center>{item.nb_heures}</center>
-                        </td>
-                        <td style={{paddingTop: '8px'}}>
-                          <center>{item.machine.prix_par_hr}</center>
-                        </td>
+                        <tr>
+                          <td style={{paddingTop: '8px'}}>
+                            <center>{item.machine.name}</center>
+                          </td>
+                          <td style={{paddingTop: '8px'}}>
+                            <center>{item.nb_heures}</center>
+                          </td>
+                          <td style={{paddingTop: '8px'}}>
+                            <center>{item.machine.prix_par_hr}</center>
+                          </td>
 
-                      </tr>
+                        </tr>
                       )}
                       <tr>
                         <td/>
@@ -236,8 +245,6 @@ class SidebarActions extends Component {
                   </div>
 
 
-
-
                   <br/><br/>
 
 
@@ -277,6 +284,25 @@ class SidebarActions extends Component {
                       </tr>
                       </tbody>
                     </table>
+                  </div>
+
+                  <div id="summary" style={{height: '170px', marginTop: '30px'}}>
+                    <div id="note" style={{float: 'left'}}><h4
+                      style={{fontSize: '10px', fontWeight: 600, fontStyle: 'italic', marginBottom: '4px'}}>Note :</h4>
+                      <p
+                        style={{fontSize: '10px', fontStyle: 'italic'}}>Information complémentaire à ajouter.</p>
+                      <textarea
+                        defaultValue={""}/></div>
+                    <div id="total">
+                      <table border={1} style={{fontSize: '85%', width: '260px', float: 'right'}}>
+                        <tbody>
+                        <tr style={{background: '#efefef', fontWeight: 600}}>
+                          <td style={{padding: '3px 4px'}}>Total TTC</td>
+                          <td>{this.state.prixtotal}</td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
 
 
